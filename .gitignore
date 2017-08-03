@@ -1,0 +1,8 @@
+*~
+*.pyc
+*.in
+/venv
+/env
+/apache
+/pytree/.ipynb_checkpoints
+/pytree/pytree_main.py

@@ -1,0 +1,5 @@
+#
+######## Define potreeServer required dependencies versions
+#
+flask==0.11.1
+PyYAML==3.12

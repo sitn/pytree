@@ -2,7 +2,7 @@
 
 from pytree import app
 from flask import request, render_template
-from flask import jsonify
+from flask import jsonify, abort
 import subprocess
 import struct
 import json
@@ -94,8 +94,10 @@ def get_profile_gmf1():
     buffer = out[4+headerSize:]
     try:
       jHeader = json.loads(header)
-    except:
-      return "No point could be extracted"
+    except:  # reading an empty buffer will cause an error => return empty json
+        jsonp = "/**/" + callback_name + "();"
+
+        return jsonp
 
     print jHeader
     numPoints = int(jHeader["points"])
@@ -140,9 +142,13 @@ def get_profile_gmf1():
 
             aoffset = aoffset + attribute.bytes
 
-        if classes[classif] not in series:
-            series.append(classes[classif])
-
+        if classif in classes:
+            if classes[classif] not in series:
+                series.append(classes[classif])
+        else:
+            classes.update({classif: pytree_config['vars']['undefined_class']})
+            if classes[classif] not in series:
+                series.append(classes[classif])
 
         jsonOutput.append({
             'dist': round(dist*100) / 100,

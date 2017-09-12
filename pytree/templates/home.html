@@ -31,11 +31,11 @@
         <label for="demdsm"> Afficher le MNT/MNS:</label>
         <input style="width: 35px;" type="checkbox" id="demdsm">
         </input><label for="width"> Largeur:</label>
-        <input style="width: 35px;" type="number" id="width" value=5></input>
+        <input style="width: 35px;" type="number" id="width" value=50></input>
         <label for="minLOD"> minLOD:</label>
         <input style="width: 35px;" type="number" id="minLOD" value=0></input>
         <label for="maxLOD"> maxLOD:</label>
-        <input style="width: 35px;" type="number" id="maxLOD" value=5></input>
+        <input style="width: 35px;" type="number" id="maxLOD" value=7></input>
         <label for="returnType"> Return type:</label>
         <select id="material" onchange="changeStyle(this.value);">
             <option value="COLOR_PACKED" selected>COLOR_PACKED</option>
@@ -43,14 +43,14 @@
             <option value="CLASSIFICATION">CLASSIFICATION</option>
         </select>
         <label for="pointCloud"> pointCloud:</label>
-        <input type="text" id="pointCloud" value="sitn2010"></input>
+        <input type="text" id="pointCloud" value="sitn2016"></input>
         <br>
         <label for="attributes"> Attributes:</label>
         <input type="text" id="attributes" value="" style="width: 600px;"></input>
         <br>
         <label for="coordinates">coordinates: </label>
-        <!-- <input type="text" id="coordinates" style="width: 600px;" value="{2554505.0,1199955.0},{2556905.0,1203075.0},{2557705.0,1203845.0}"></input> -->
-        <input type="text" id="coordinates" style="width: 600px;" value="{589500.0,231300.0},{590098.0,231565.0},{590098.0,231565.0}"></input>
+        <input type="text" id="coordinates" style="width: 600px;" value="{2554505.0,1199955.0},{2556905.0,1203075.0},{2557705.0,1203845.0}"></input>
+        <!-- <input type="text" id="coordinates" style="width: 600px;" value="{589500.0,231300.0},{590098.0,231565.0},{590098.0,231565.0}"></input> -->
         <div id="classes"></div>
     </div>
     <!-- d3js CANVAS (points) + SVG (axis) profile -->

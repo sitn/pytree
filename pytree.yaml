@@ -75,6 +75,18 @@ vars:
     #****************************
     # GMF 1 support
     #****************************
+    
+    max_levels:
+      100: 
+        max: 11
+      250: 
+        max: 10
+      500: 
+        max: 9
+      1000:
+        max: 8
+      100000:
+        max: 7
 
     # Class that you might have forgotten to define...
     undefined_class: Classe inconnue
@@ -107,5 +119,5 @@ vars:
 
     minLOD: 0
     maxLOD: 8
-    width: 5
+    width: 3
     default_point_cloud: sitn2016

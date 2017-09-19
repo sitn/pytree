@@ -1,11 +1,11 @@
 vars:
-    debug: true
-    server_url: http://localhost:5001
+    debug: false
+    server_url: http://sitn.ne.ch/pytree
     gmf_url: ""
-    cpotree_executable: bin/PotreeElevationProfile.exe
+    cpotree_executable: D:/Applications/pytree/bin/PotreeElevationProfile.exe
     # Available point clouds
     pointclouds:
-        sitn2010: pytree/resources/pointclouds/vol_total/cloud.js
+        sitn2016: Z:/potree_data/clouds/2016/pointclouds/lidar2016_14levels/cloud.js
 
     # Classification colors
     classification_colors:
@@ -76,44 +76,36 @@ vars:
     # GMF 1 support
     #****************************
 
+    # Class that you might have forgotten to define...
+    undefined_class: Classe inconnue
+    
     # LIDAR classes configuration
-
     classes_names_standard:
-      0: never_classified
-      1: Unclassified
+      1: never_classified
       2: Ground
       3: Low_Vegetation_2010
-      5: High_Vegetation_2010
-      6: Building_2010
+      4: High_Vegetation_2010
+      5: Building_2010
+      6: Building
       7: Low_Point
       8: Model_Key_point
       9: Water_2010
       10: ASPRS_Reserved
       11: ASPRS_Reserved
       12: Overlap
-      13: Cars
-      14: Cranes
-      15: Aerial_Lines
-      16: Noise
-
-    classes_names_normalized:
-      0: Vegetation_2001
-      1: Buildings_2001
-      2: Ground
-      3: Low_Vegetation_2010
-      5: High_Vegetation_2010
-      6: Building_2010
-      7: Low_Point
-      8: Model_Key-point
-      9: Water_2010
-      10: ASPRS_Reserved
-      11: ASPRS_Reserved
-      12: Overlap
-      13: Cars_2010
-      14: Aerial_Lines_2010
-      15: Crane_2010
+      13: Wire - Guard (Shield)
+      14: Wire - Conductor (Phase)
+      15: Transmission Towers
+      16: Wire-structure Connector
+      17: Bridge Deck
+      18: High Noise
+      64: Voitures
+      65: Grues et temporaire
+      70: Facades
+      71: Murs
+      99: Hors périmetre
 
     minLOD: 0
-    maxLOD: 10
-    width: 2
-    default_point_cloud: vol_total
+    maxLOD: 8
+    width: 5
+    default_point_cloud: sitn2016

@@ -1,11 +1,11 @@
 vars:
     debug: false
-    server_url: http://sitn.ne.ch/pytree
+    server_url: your_server_url
     gmf_url: ""
-    cpotree_executable: D:/Applications/pytree/bin/PotreeElevationProfile.exe
+    cpotree_executable: path_to_cpotre.exe
     # Available point clouds
     pointclouds:
-        sitn2016: Z:/potree_data/clouds/2016/pointclouds/lidar2016_14levels/cloud.js
+        my_cloud: path_to_potree_cloud
 
     # Classification colors
     classification_colors:
@@ -120,4 +120,4 @@ vars:
     minLOD: 0
     maxLOD: 8
     width: 3
-    default_point_cloud: sitn2016
+    default_point_cloud: my_default_cloud

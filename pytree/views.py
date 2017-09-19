@@ -10,6 +10,7 @@ import os
 import yaml
 import urllib2
 import urllib
+import math
 from flask_cors import CORS, cross_origin
 
 pytree_config = yaml.load(open(os.path.dirname(os.path.abspath(__file__)) + ".yaml", 'r'))
@@ -68,8 +69,10 @@ def get_profile_gmf1():
     point_clouds = pytree_config['vars']['pointclouds']
     classes = pytree_config['vars']['classes_names_' + data_type]
     maxLevel = str(pytree_config['vars']['maxLOD'])
+    maxLevels = pytree_config['vars']['max_levels']
     minLevel = str(pytree_config['vars']['minLOD'])
     minLevel = str(pytree_config['vars']['minLOD'])
+
     width = str(pytree_config['vars']['width'])
 
     series = []
@@ -77,15 +80,29 @@ def get_profile_gmf1():
     if polyline == '':
         return 'Error: empty linestring'
     else:
-        coordinates = json.loads(polyline)["coordinates"]
+        coords = json.loads(polyline)["coordinates"]
         potreeGeom = ""
-        for coord in coordinates:
-            potreeGeom += '{' + str(coord[0]) + ',' + str(coord[1]) + '},'
+        mileage = 0
+        for i in range(0,len(coords)):
+            x = coords[i][0]
+            y = coords[i][1]
+            potreeGeom += '{' + str(x) + ',' + str(y) + '},'
+            if i < len(coords)-1:
+                xn = coords[i+1][0]
+                yn = coords[i+1][1]
+            mileage += math.sqrt((xn-x) * (xn-x) + (yn-y) * (yn-y))
+
+        adaptativeLevel = 0
+        for level in maxLevels:
+            if mileage <= level and adaptativeLevel <= maxLevels[level]['max']:
+                adaptativeLevel = maxLevels[level]['max']
+ 
+
         potreeGeom = potreeGeom[:-1]
 
     file = point_clouds[point_cloud]
 
-    p = subprocess.Popen([cpotree, file, "--stdout"] + ["--coordinates", potreeGeom, "--width", width, "--min-level", minLevel, "--max-level", maxLevel], bufsize=-1, stdout=subprocess.PIPE)
+    p = subprocess.Popen([cpotree, file, "--stdout"] + ["--coordinates", potreeGeom, "--width", width, "--min-level", minLevel, "--max-level", str(adaptativeLevel)], bufsize=-1, stdout=subprocess.PIPE)
 
     [out, err] = p.communicate()
 

@@ -3,19 +3,19 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>potree Server</title>
-    <script src="../static/libs/js/jquery/jquery-3.1.1.js"></script>
-    <script src="../static/libs/js/d3/d3.js"></script>
-    <script src="../static/js/cpotreeProfileConfig.js"></script>
-    <script src="../static/js/cpotreeUtils.js"></script>
-    <script src="../static/js/cpotreeAttributes.js"></script>
-    <script src="../static/js/cpotreeProfileLoader.js"></script>
-    <script src="../static/js/cpotreeProfile.js"></script>
-    <script src="../static/js/cpotreeDataExport.js"></script>
-    <script src="../static/js/cpotreeMeasure.js"></script>
-    <script src="../static/js/cpotreeDem.js"></script>
-    <script src="../static/js/cpotreePngExport.js"></script>
-    <script src="../static/js/cpotreeDsmGenerator.js"></script>
-    <link rel="stylesheet" href="../static/css/pytree.css"/>
+    <script src="static/libs/js/jquery/jquery-3.1.1.js"></script>
+    <script src="static/libs/js/d3/d3.js"></script>
+    <script src="static/js/cpotreeProfileConfig.js"></script>
+    <script src="static/js/cpotreeUtils.js"></script>
+    <script src="static/js/cpotreeAttributes.js"></script>
+    <script src="static/js/cpotreeProfileLoader.js"></script>
+    <script src="static/js/cpotreeProfile.js"></script>
+    <script src="static/js/cpotreeDataExport.js"></script>
+    <script src="static/js/cpotreeMeasure.js"></script>
+    <script src="static/js/cpotreeDem.js"></script>
+    <script src="static/js/cpotreePngExport.js"></script>
+    <script src="static/js/cpotreeDsmGenerator.js"></script>
+    <link rel="stylesheet" href="static/css/pytree.css"/>
 </head>
 
 <body>
@@ -31,11 +31,11 @@
         <label for="demdsm"> Afficher le MNT/MNS:</label>
         <input style="width: 35px;" type="checkbox" id="demdsm">
         </input><label for="width"> Largeur:</label>
-        <input style="width: 35px;" type="number" id="width" value=50></input>
+        <input style="width: 35px;" type="number" id="width" value=150></input>
         <label for="minLOD"> minLOD:</label>
         <input style="width: 35px;" type="number" id="minLOD" value=0></input>
         <label for="maxLOD"> maxLOD:</label>
-        <input style="width: 35px;" type="number" id="maxLOD" value=7></input>
+        <input style="width: 35px;" type="number" id="maxLOD" value=5></input>
         <label for="returnType"> Return type:</label>
         <select id="material" onchange="changeStyle(this.value);">
             <option value="COLOR_PACKED" selected>COLOR_PACKED</option>

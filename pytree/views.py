@@ -143,16 +143,12 @@ def get_profile_gmf1():
                 x = ux * scale + jHeader["boundingBox"]["lx"]
                 y = uy * scale + jHeader["boundingBox"]["ly"]
                 z = uz * scale + jHeader["boundingBox"]["lz"]
+                alti = z
 
             elif attribute == PointAttributes.POSITION_PROJECTED_PROFILE:
 
                 ux = struct.unpack('i', pbuffer[aoffset + 0: aoffset + 4])[0]
-                uz = struct.unpack('i', pbuffer[aoffset + 4: aoffset + 8])[0]
-                # uy = struct.unpack('i', pbuffer[aoffset + 8: aoffset + 12])[0]
-
                 dist = ux * scale
-                # y = uy * scale
-                alti = uz * scale
 
             elif attribute == PointAttributes.CLASSIFICATION:
                 classif = struct.unpack('B', pbuffer[aoffset: aoffset + 1])[0]

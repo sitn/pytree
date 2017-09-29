@@ -172,6 +172,8 @@ def get_profile_gmf1():
             'y': round(y*100)/100
         })
 
+	jsonOutput = sorted(jsonOutput, key=lambda k: k['dist'])
+
     las_extractor_output =  {
     'profile': jsonOutput,
     'series': series,

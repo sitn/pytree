@@ -3,6 +3,7 @@
 *.in
 /venv
 /env
+/log
 /apache
 /pytree/.ipynb_checkpoints
 /pytree/pytree_main.py

@@ -12,6 +12,7 @@ import urllib2
 import urllib
 import math
 from flask_cors import CORS, cross_origin
+from logging import log_profiles
 
 pytree_config = yaml.load(open(os.path.dirname(os.path.abspath(__file__)) + ".yaml", 'r'))
 
@@ -72,6 +73,7 @@ def get_profile_gmf1():
     maxLevels = pytree_config['vars']['max_levels']
     minLevel = str(pytree_config['vars']['minLOD'])
     minLevel = str(pytree_config['vars']['minLOD'])
+    log_folder = str(pytree_config['vars']['log_folder'])
 
     width = str(pytree_config['vars']['width'])
 
@@ -99,7 +101,9 @@ def get_profile_gmf1():
  
 
         potreeGeom = potreeGeom[:-1]
-
+    
+    log_profiles(log_folder, coords)
+    
     file = point_clouds[point_cloud]
 
     p = subprocess.Popen([cpotree, file, "--stdout"] + ["--coordinates", potreeGeom, "--width", width, "--min-level", minLevel, "--max-level", str(adaptativeLevel)], bufsize=-1, stdout=subprocess.PIPE)

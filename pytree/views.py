@@ -225,23 +225,10 @@ def get_gmf_dem_dsm():
 
     return jsonify(demdsm)
 
-@app.route("/get_classification_colors")
+@app.route("/profile_config_gmf2")
 @cross_origin()
-def get_classification_colors():
-
-    return jsonify(pytree_config['vars']['classification_colors'])
-
-@app.route("/get_point_clouds")
-@cross_origin()
-def get_point_clouds():
-
-    return jsonify(pytree_config['vars']['pointclouds'])
-
-@app.route("/get_default_material")
-@cross_origin()
-def get_default_material():
-
-    return jsonify(pytree_config['vars']['default_material'])
+def profile_config_gmf2():
+    return jsonify(pytree_config['vars'])
 
 class PointAttribute:
     def __init__(s, name, elements, bytes):

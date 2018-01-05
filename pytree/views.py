@@ -35,7 +35,6 @@ def get_profile():
 
     point_clouds = pytree_config['vars']['pointclouds']
 
-    # Profile parameters
     polyline = request.args['coordinates']
 
     if polyline == '':
@@ -120,7 +119,6 @@ def get_profile_gmf1():
 
         return jsonp
 
-    print jHeader
     numPoints = int(jHeader["points"])
     scale = float(jHeader["scale"])
     bytesPerPoint = int(jHeader["bytesPerPoint"])

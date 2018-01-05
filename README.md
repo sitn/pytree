@@ -24,7 +24,7 @@ Warning: debug mode is currently activated by default
 1. Edit pytree.yaml configuration file if needed
 2. Run the server: ```python runserver.py```
 3. If the dev server runs fine, the adress [localhost:5001](localhost:5001) will display a demo page
-4. Note: the demo page is there for testing purposes and not actively maintained
+4. Note: pointcloud CRS must be the same as the app calling for profiles. Reprojection is not implemented
 
 ## Production setup
 

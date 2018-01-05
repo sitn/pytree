@@ -68,9 +68,7 @@ def get_profile_gmf1():
     cpotree = point_clouds = pytree_config['vars']['cpotree_executable']
     point_clouds = pytree_config['vars']['pointclouds']
     classes = pytree_config['vars']['classes_names_' + data_type]
-    maxLevel = str(pytree_config['vars']['maxLOD'])
-    maxLevels = pytree_config['vars']['max_levels']
-    minLevel = str(pytree_config['vars']['minLOD'])
+    maxLevels = pytree_config['vars']['max_levels_gmf1']
     minLevel = str(pytree_config['vars']['minLOD'])
     log_folder = str(pytree_config['vars']['log_folder'])
 

@@ -28,7 +28,7 @@ def home(name=None):
     return render_template('home.html', name=name)
 
 
-@app.route("/get_profile")
+@app.route("/profile/get")
 @cross_origin()
 def get_profile():
     cpotree = point_clouds = pytree_config['vars']['cpotree_executable']
@@ -55,7 +55,7 @@ def get_profile():
     return out
 
 
-@app.route("/get_profile_gmf1/profile")
+@app.route("/profile_v1/get")
 @cross_origin()
 def get_profile_gmf1():
 
@@ -191,7 +191,7 @@ def get_profile_gmf1():
 
 
 #proxy to gmf raster dem/dsm profile service
-@app.route("/get_gmf_dem_dsm")
+@app.route("/dem/get")
 @cross_origin()
 def get_gmf_dem_dsm():
 
@@ -221,7 +221,7 @@ def get_gmf_dem_dsm():
 
     return jsonify(demdsm)
 
-@app.route("/profile_config_gmf2")
+@app.route("/profile/config")
 @cross_origin()
 def profile_config_gmf2():
     return jsonify(pytree_config['vars'])

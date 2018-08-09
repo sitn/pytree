@@ -8,11 +8,10 @@ import struct
 import json
 import os
 import yaml
-import urllib2
 import urllib
 import math
 from flask_cors import CORS, cross_origin
-from logging import log_profiles
+from pytree.logging import log_profiles
 
 pytree_config = yaml.load(open(os.path.dirname(os.path.abspath(__file__)) + ".yaml", 'r'))
 
@@ -46,7 +45,6 @@ def get_profile():
     width = request.args['width']
     point_cloud = request.args['pointCloud']
     file = point_clouds[point_cloud]
-
     attributes = [request.args['attributes']]
     p = subprocess.Popen([cpotree, file, "--stdout"] + attributes + ["--coordinates", polyline, "--width", width, "--min-level", minLevel, "--max-level", maxLevel], bufsize=-1, stdout=subprocess.PIPE)
 
@@ -172,7 +170,7 @@ def get_profile_gmf1():
             'y': round(y*100)/100
         })
 
-	jsonOutput = sorted(jsonOutput, key=lambda k: k['dist'])
+    jsonOutput = sorted(jsonOutput, key=lambda k: k['dist'])
 
     las_extractor_output =  {
     'profile': jsonOutput,
@@ -215,8 +213,8 @@ def get_gmf_dem_dsm():
 
     data = urllib.urlencode(dico)
 
-    req = urllib2.Request(url, data=data)
-    response = urllib2.urlopen(req)
+    req = urllib.Request(url, data=data)
+    response = urllib.urlopen(req)
     demdsm = response.read()
 
     return jsonify(demdsm)

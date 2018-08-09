@@ -13,12 +13,16 @@
 2. Open a command line in the project directory
 3. Create a virtual environnement and update pip
 
-    python -m venv --system-site-packages .build/venv
-    .build\venv\Scripts\python -m pip install --upgrade pip
-    
+```
+python -m venv --system-site-packages .build/venv
+.build\venv\Scripts\python -m pip install --upgrade pip
+```
+
 4. Install dependencies with correct version:
 
-    .build\venv\Scripts\python -m pip install -r requirements.txt
+```
+.build\venv\Scripts\python -m pip install -r requirements.txt
+```
 
 ## Starting the developpement server
 

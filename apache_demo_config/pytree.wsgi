@@ -9,7 +9,7 @@
     arrived, first used
 """
 
-ALLDIRS = ["<your_path_to_pytree_dir>", "<your_path_to_pytree_dir>\\venv\\Lib\\site-packages"]
+ALLDIRS = ["<your_path_to_pytree_dir>", "<your_path_to_pytree_dir>\\.build\\venv\\Lib\\site-packages"]
 
 import sys
 import site

@@ -224,7 +224,14 @@ def get_gmf_dem_dsm():
 @app.route("/profile/config")
 @cross_origin()
 def profile_config_gmf2():
-    return jsonify(pytree_config['vars'])
+
+    vars = pytree_config['vars']
+
+    vars.pop('cpotree_executable')
+    vars.pop('pointclouds')
+    vars.pop('log_folder')
+
+    return jsonify(vars)
 
 class PointAttribute:
     def __init__(s, name, elements, bytes):

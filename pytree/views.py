@@ -30,7 +30,7 @@ def home(name=None):
 @app.route("/profile/get")
 @cross_origin()
 def get_profile():
-    cpotree = point_clouds = pytree_config['vars']['cpotree_executable']
+    cpotree = pytree_config['vars']['cpotree_executable']
 
     point_clouds = pytree_config['vars']['pointclouds']
 
@@ -223,11 +223,16 @@ def get_gmf_dem_dsm():
 @cross_origin()
 def profile_config_gmf2():
 
-    vars = pytree_config['vars']
+    vars = pytree_config['vars'].copy()
 
-    vars.pop('cpotree_executable')
-    vars.pop('pointclouds')
-    vars.pop('log_folder')
+    if 'cpotree_executable' in vars:
+        vars.pop('cpotree_executable')
+
+    if 'pointclouds' in vars:
+        vars.pop('pointclouds')
+
+    if 'log_folder' in vars:
+        vars.pop('log_folder')
 
     return jsonify(vars)
 

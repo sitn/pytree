@@ -61,9 +61,9 @@ def get_profile_gmf1():
     polyline = request.args['geom']
     callback_name = request.args['callback']
     intranet_code = request.args['code']
-    point_cloud = point_clouds = pytree_config['vars']['default_point_cloud']
+    point_cloud = pytree_config['vars']['default_point_cloud']
 
-    cpotree = point_clouds = pytree_config['vars']['cpotree_executable']
+    cpotree = pytree_config['vars']['cpotree_executable']
     point_clouds = pytree_config['vars']['pointclouds']
     classes = pytree_config['vars']['classes_names_' + data_type]
     maxLevels = pytree_config['vars']['max_levels_gmf1']

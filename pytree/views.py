@@ -46,6 +46,7 @@ def get_profile():
     point_cloud = request.args['pointCloud']
     file = point_clouds[point_cloud]
     attributes = [request.args['attributes']]
+    print('[' + cpotree + '-' + file + '--stdout]' + str(attributes) + '["--coordinates",' +  str(polyline) + ', "--width",' +  width + ', "--min-level",' +  minLevel + ', "--max-level",' +  maxLevel + ']')
     p = subprocess.Popen([cpotree, file, "--stdout"] + attributes + ["--coordinates", polyline, "--width", width, "--min-level", minLevel, "--max-level", maxLevel], bufsize=-1, stdout=subprocess.PIPE)
 
     [out, err] = p.communicate()
@@ -93,12 +94,12 @@ def get_profile_gmf1():
         for level in maxLevels:
             if mileage <= level and adaptativeLevel <= maxLevels[level]['max']:
                 adaptativeLevel = maxLevels[level]['max']
- 
+
 
         potreeGeom = potreeGeom[:-1]
-    
+
     log_profiles(log_folder, coords)
-    
+
     file = point_clouds[point_cloud]
 
     p = subprocess.Popen([cpotree, file, "--stdout"] + ["--coordinates", potreeGeom, "--width", width, "--min-level", minLevel, "--max-level", str(adaptativeLevel)], bufsize=-1, stdout=subprocess.PIPE)

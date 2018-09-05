@@ -1,7 +1,7 @@
 *~
 *.pyc
 *.in
-/venv
+/.build
 /env
 /log
 /apache

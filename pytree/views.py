@@ -8,11 +8,10 @@ import struct
 import json
 import os
 import yaml
-import urllib2
 import urllib
 import math
 from flask_cors import CORS, cross_origin
-from logging import log_profiles
+from pytree.logging import log_profiles
 
 pytree_config = yaml.load(open(os.path.dirname(os.path.abspath(__file__)) + ".yaml", 'r'))
 
@@ -31,7 +30,7 @@ def home(name=None):
 @app.route("/profile/get")
 @cross_origin()
 def get_profile():
-    cpotree = point_clouds = pytree_config['vars']['cpotree_executable']
+    cpotree = pytree_config['vars']['cpotree_executable']
 
     point_clouds = pytree_config['vars']['pointclouds']
 
@@ -46,7 +45,6 @@ def get_profile():
     width = request.args['width']
     point_cloud = request.args['pointCloud']
     file = point_clouds[point_cloud]
-
     attributes = [request.args['attributes']]
     p = subprocess.Popen([cpotree, file, "--stdout"] + attributes + ["--coordinates", polyline, "--width", width, "--min-level", minLevel, "--max-level", maxLevel], bufsize=-1, stdout=subprocess.PIPE)
 
@@ -63,9 +61,9 @@ def get_profile_gmf1():
     polyline = request.args['geom']
     callback_name = request.args['callback']
     intranet_code = request.args['code']
-    point_cloud = point_clouds = pytree_config['vars']['default_point_cloud']
+    point_cloud = pytree_config['vars']['default_point_cloud']
 
-    cpotree = point_clouds = pytree_config['vars']['cpotree_executable']
+    cpotree = pytree_config['vars']['cpotree_executable']
     point_clouds = pytree_config['vars']['pointclouds']
     classes = pytree_config['vars']['classes_names_' + data_type]
     maxLevels = pytree_config['vars']['max_levels_gmf1']
@@ -172,7 +170,7 @@ def get_profile_gmf1():
             'y': round(y*100)/100
         })
 
-	jsonOutput = sorted(jsonOutput, key=lambda k: k['dist'])
+    jsonOutput = sorted(jsonOutput, key=lambda k: k['dist'])
 
     las_extractor_output =  {
     'profile': jsonOutput,
@@ -215,8 +213,8 @@ def get_gmf_dem_dsm():
 
     data = urllib.urlencode(dico)
 
-    req = urllib2.Request(url, data=data)
-    response = urllib2.urlopen(req)
+    req = urllib.Request(url, data=data)
+    response = urllib.urlopen(req)
     demdsm = response.read()
 
     return jsonify(demdsm)
@@ -225,11 +223,16 @@ def get_gmf_dem_dsm():
 @cross_origin()
 def profile_config_gmf2():
 
-    vars = pytree_config['vars']
+    vars = pytree_config['vars'].copy()
 
-    vars.pop('cpotree_executable')
-    vars.pop('pointclouds')
-    vars.pop('log_folder')
+    if 'cpotree_executable' in vars:
+        vars.pop('cpotree_executable')
+
+    if 'pointclouds' in vars:
+        vars.pop('pointclouds')
+
+    if 'log_folder' in vars:
+        vars.pop('log_folder')
 
     return jsonify(vars)
 

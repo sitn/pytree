@@ -4,10 +4,9 @@
 
 ## Requirements
 
-0. Windows OS. Sorry about that.
 1. Python 3.7
 
-## Installation
+## Installation on windows with full admin rights
 
 1. Clone this repository on your machine
 2. Open a command line in the project directory
@@ -23,6 +22,30 @@ python -m venv --system-site-packages .build/venv
 ```
 .build\venv\Scripts\python -m pip install -r requirements.txt
 ```
+
+## Installation on linux (debian 9 tested) with limited rights (no permission to install pip)
+
+1. Clone this repository on your machine
+2. Open a command line in the project directory
+3. Create a virtual environnement and update pip
+
+```
+mkdir venv
+cd ~/venv
+python3 -m venv pytree --without-pip
+source pytree/bin/activate
+wget https://bootstrap.pypa.io/get-pip.py
+python3 get-pip.py
+deactivate
+source venv/pytree/bin/activate
+pip --version
+pip install requirements.tx
+```
+
+4. Adapt setup in pytree.yaml to use debian binary
+
+5. Doc to create debian binary: https://github.com/loicgasser/CPotree/blob/4f1bb510aa9d768e98be87412926583bf61844d3/README.md
+
 
 ## Starting the developpement server
 

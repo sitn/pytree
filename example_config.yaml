@@ -1,13 +1,13 @@
 vars:
     debug: true
     server_url: http://localhost:5000
-    log_folder: /var/www/vhosts/yverdon-geoportail/private/pytree/log
+    log_folder: <path_to>/pytree/log
     gmf_url: ""
     # path to cpotree exectuable
-    cpotree_executable: /var/www/vhosts/yverdon-geoportail/private/pytree/cPotreeDebian.out
+    cpotree_executable: <path_to>/bin/PotreeElevationProfile
     # Available point clouds. NOTE: pointclouds CRS must be the same as the APP, reprojection is not implemented!
     pointclouds:
-        sit: /var/www/vhosts/yverdon-geoportail/htdocs/lidar/lidar_app/pointclouds/web/cloud.js
+        sit: <path_to>/cloud.js
     # point cloud to use in profile
     default_point_cloud: sit
     # default profile width

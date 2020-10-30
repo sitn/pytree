@@ -1,0 +1,6 @@
+
+Flask==1.1.2
+Flask-Cors==3.0.9
+PyYAML==5.3.1
+Jinja2==2.10.1
+gunicorn==20.0.4

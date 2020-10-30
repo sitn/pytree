@@ -1,6 +1,6 @@
 # potree server height profile extractor project
 
-*A [Flask application](http://flask.pocoo.org/)*
+_A [Flask application](http://flask.pocoo.org/)_
 
 ## Requirements
 
@@ -29,11 +29,11 @@ python -m venv --system-site-packages .build/venv
 Warning: debug mode is currently activated by default
 
 1. Edit pytree.yaml configuration file if needed
-2. Run the server: ```python runserver.py```
+2. Run the server: `python runserver.py`
 3. If the dev server runs fine, the adress [localhost:5000](localhost:5000) will display a demo page
 4. Note: pointcloud CRS must be the same as the app calling for profiles. Reprojection is not implemented
 
 ## Production setup
 
-Example Apache 2.4 WSGI configuration files are in ```apache_demo_config``` directory.
+Example Apache 2.4 WSGI configuration files are in `apache_demo_config` directory.
 You'll need to adapt to you local setup

@@ -2,7 +2,7 @@
 
 from pytree import app
 from flask import request, render_template
-from flask import jsonify, abort
+from flask import jsonify
 import subprocess
 import struct
 import json
@@ -10,17 +10,22 @@ import os
 import yaml
 import urllib
 import math
-from flask_cors import CORS, cross_origin
+from flask_cors import cross_origin
 from pytree.logging import log_profiles
 
-pytree_config = yaml.load(open(os.path.dirname(os.path.abspath(__file__)) + ".yaml", 'r'))
+pytree_config = yaml.load(
+    open(os.path.dirname(os.path.abspath(__file__)) +
+         ".yaml", 'r'), Loader=yaml.FullLoader)
+
 
 @app.context_processor
 def yaml_config_vars():
     return dict(yaml_config_vars=get_yaml_config_vars())
 
+
 def get_yaml_config_vars():
     return pytree_config
+
 
 @app.route('/')
 def home(name=None):
@@ -37,7 +42,7 @@ def get_profile():
     polyline = request.args['coordinates']
 
     if polyline == '':
-      return 'Empty coordinates'
+        return 'Empty coordinates'
 
     maxLevel = request.args['maxLOD']
     minLevel = request.args['minLOD']
@@ -46,7 +51,14 @@ def get_profile():
     point_cloud = request.args['pointCloud']
     file = point_clouds[point_cloud]
     attributes = [request.args['attributes']]
-    p = subprocess.Popen([cpotree, file, "--stdout"] + attributes + ["--coordinates", polyline, "--width", width, "--min-level", minLevel, "--max-level", maxLevel], bufsize=-1, stdout=subprocess.PIPE)
+    p = subprocess.Popen(
+        [cpotree, file, "--stdout"] + attributes +
+        ["--coordinates", polyline,
+            "--width", width,
+            "--min-level", minLevel,
+            "--max-level", maxLevel],
+        bufsize=-1,
+        stdout=subprocess.PIPE)
 
     [out, err] = p.communicate()
 
@@ -60,7 +72,6 @@ def get_profile_gmf1():
     data_type = request.args['dataType']
     polyline = request.args['geom']
     callback_name = request.args['callback']
-    intranet_code = request.args['code']
     point_cloud = pytree_config['vars']['default_point_cloud']
 
     cpotree = pytree_config['vars']['cpotree_executable']
@@ -80,7 +91,7 @@ def get_profile_gmf1():
         coords = json.loads(polyline)["coordinates"]
         potreeGeom = ""
         mileage = 0
-        for i in range(0,len(coords)):
+        for i in range(0, len(coords)):
             x = coords[i][0]
             y = coords[i][1]
             potreeGeom += '{' + str(x) + ',' + str(y) + '},'
@@ -93,15 +104,18 @@ def get_profile_gmf1():
         for level in maxLevels:
             if mileage <= level and adaptativeLevel <= maxLevels[level]['max']:
                 adaptativeLevel = maxLevels[level]['max']
- 
-
         potreeGeom = potreeGeom[:-1]
-    
+
     log_profiles(log_folder, coords)
-    
+
     file = point_clouds[point_cloud]
 
-    p = subprocess.Popen([cpotree, file, "--stdout"] + ["--coordinates", potreeGeom, "--width", width, "--min-level", minLevel, "--max-level", str(adaptativeLevel)], bufsize=-1, stdout=subprocess.PIPE)
+    p = subprocess.Popen(
+        [cpotree, file, "--stdout"] +
+        ["--coordinates", potreeGeom,
+            "--width", width, "--min-level",
+            minLevel, "--max-level",
+            str(adaptativeLevel)], bufsize=-1, stdout=subprocess.PIPE)
 
     [out, err] = p.communicate()
 
@@ -123,7 +137,7 @@ def get_profile_gmf1():
     for attribute in jHeader["pointAttributes"]:
         attributes.append(PointAttributes.fromName(attribute))
 
-    jsonOutput=[]
+    jsonOutput = []
 
     for i in range(numPoints):
         byteOffset = bytesPerPoint * i
@@ -172,13 +186,13 @@ def get_profile_gmf1():
 
     jsonOutput = sorted(jsonOutput, key=lambda k: k['dist'])
 
-    las_extractor_output =  {
-    'profile': jsonOutput,
-    'series': series,
-    'csvId': '',
-    'zRange': {
-        'zMin': jHeader["boundingBox"]["lz"],
-        'zMax': jHeader["boundingBox"]["uz"]
+    las_extractor_output = {
+        'profile': jsonOutput,
+        'series': series,
+        'csvId': '',
+        'zRange': {
+            'zMin': jHeader["boundingBox"]["lz"],
+            'zMax': jHeader["boundingBox"]["uz"]
         }
     }
 
@@ -188,7 +202,7 @@ def get_profile_gmf1():
     return jsonp
 
 
-#proxy to gmf raster dem/dsm profile service
+# proxy to gmf raster dem/dsm profile service
 @app.route("/dem/get")
 @cross_origin()
 def get_gmf_dem_dsm():
@@ -219,6 +233,7 @@ def get_gmf_dem_dsm():
 
     return jsonify(demdsm)
 
+
 @app.route("/profile/config")
 @cross_origin()
 def profile_config_gmf2():
@@ -236,16 +251,19 @@ def profile_config_gmf2():
 
     return jsonify(vars)
 
+
 class PointAttribute:
     def __init__(s, name, elements, bytes):
         s.name = name
         s.elements = elements
         s.bytes = bytes
 
+
 class PointAttributes:
 
     POSITION_CARTESIAN = PointAttribute("POSITION_CARTESIAN", 3, 12)
-    POSITION_PROJECTED_PROFILE = PointAttribute("POSITION_PROJECTED_PROFILE", 2, 8)
+    POSITION_PROJECTED_PROFILE = PointAttribute(
+        "POSITION_PROJECTED_PROFILE", 2, 8)
     COLOR_PACKED = PointAttribute("COLOR_PACKED", 4, 4)
     RGB = PointAttribute("RGB", 3, 3)
     RGBA = PointAttribute("RGBA", 4, 4)

@@ -2,6 +2,15 @@
 
 _A [Flask application](http://flask.pocoo.org/)_
 
+
+## Docker
+
+```
+docker-compose down --remove-orphans -v    
+docker-compose up --build
+```
+
+
 ## Requirements
 
 0. Windows OS. Sorry about that.

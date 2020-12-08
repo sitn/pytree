@@ -17,7 +17,7 @@ from flask_cors import cross_origin
 from pytree.logging import log_profiles
 
 #%%
-yaml_config_file = join(dirname(abspath(__file__)), ".yml")
+yaml_config_file = (dirname(abspath(__file__)) + ".yml")
 with open(yaml_config_file, 'r') as f:
     pytree_config = yaml.load(f, Loader=FullLoader)
 

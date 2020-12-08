@@ -16,6 +16,6 @@ if __name__ == '__main__':
     DEBUG = pytree_config['vars']['debug']
     if DEBUG:
         CORS(app)
-        app.run(debug=True, port=5001)
+        app.run(debug=True, port=5000)
     else:
         app.run()

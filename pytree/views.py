@@ -1,21 +1,25 @@
 # -*- coding: utf-8 -*-
 
+#%%
 from pytree import app
 from flask import request, render_template
 from flask import jsonify
+import os, sys
+from os.path import join, abspath, dirname
 import subprocess
 import struct
 import json
-import os
 import yaml
+from yaml import FullLoader
 import urllib
 import math
 from flask_cors import cross_origin
 from pytree.logging import log_profiles
 
-pytree_config = yaml.load(
-    open(os.path.dirname(os.path.abspath(__file__)) +
-         ".yaml", 'r'), Loader=yaml.FullLoader)
+#%%
+yaml_config_file = join(dirname(abspath(__file__)), ".yml")
+with open(yaml_config_file, 'r') as f:
+    pytree_config = yaml.load(f, Loader=FullLoader)
 
 
 @app.context_processor

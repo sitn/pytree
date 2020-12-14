@@ -1,24 +1,27 @@
-# potree server height profile extractor project
+# Pytree
 
-_A [Flask application](http://flask.pocoo.org/)_
+_A [Flask](http://flask.pocoo.org/)_ application serving potree to extract
+height profile from [LiDAR](https://en.wikipedia.org/wiki/Lidar) data.
 
+## Installation
 
-## Docker
+### The Docker Way
 
 ```
 docker-compose down --remove-orphans -v    
 docker-compose up --build
 ```
 
+### The (old) Native Way
 
-## Requirements
+#### Requirements
 
-0. Windows OS. Sorry about that.
-1. Python 3.7
+1. Windows OS. Sorry about that.
+2. Python 3.7
 
-## Installation
+#### Installation Steps
 
-1. Clone this repository on your machine
+1. Clone [this repository]() on your machine
 2. Open a command line in the project directory
 3. Create a virtual environnement and update pip
 
@@ -33,7 +36,7 @@ python -m venv --system-site-packages .build/venv
 .build\venv\Scripts\python -m pip install -r requirements.txt
 ```
 
-## Starting the developpement server
+#### Starting the Developpement Server
 
 Warning: debug mode is currently activated by default
 
@@ -42,7 +45,7 @@ Warning: debug mode is currently activated by default
 3. If the dev server runs fine, the adress [localhost:5000](localhost:5000) will display a demo page
 4. Note: pointcloud CRS must be the same as the app calling for profiles. Reprojection is not implemented
 
-## Production setup
+#### Production Setup
 
 Example Apache 2.4 WSGI configuration files are in `apache_demo_config` directory.
 You'll need to adapt to you local setup

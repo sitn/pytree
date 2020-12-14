@@ -1,12 +1,8 @@
 FROM python:3.9.1-slim
-RUN mkdir /app
+RUN mkdir -p /app
 WORKDIR /app
 ADD requirements.txt /app
 RUN pip3 install -r requirements.txt
 ADD . /app
-RUN mkdir logs && chmod -R a+rw logs
-EXPOSE 6001
-
-ENTRYPOINT ["python", "devserver.py"]
-RUN chmod +x ./entrypoint.sh
-#ENTRYPOINT ["sh", "entrypoint.sh"]
+RUN mkdir -p logs && chmod -R a+rw logs
+RUN chmod +x /app/entrypoint.sh

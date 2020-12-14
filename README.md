@@ -5,7 +5,7 @@ height profile from [LiDAR](https://en.wikipedia.org/wiki/Lidar) data.
 
 
 ## Requirements
-Extract this release of [cPotree](https://github.com/potree/CPotree/releases/tag/0.2)
+Extract release 0.2 of [cPotree](https://github.com/potree/CPotree/releases/tag/0.2)
 to `./bin` and give the executable file `extract_profile` actually executable:
 
 ```

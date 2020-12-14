@@ -5,12 +5,16 @@ volumes:
 
 services:
   api:
+    image: pytree:0.0.1
+    environment:
+      DEPLOY_ENV: ${DEPLOY_ENV:-DEV}
     restart: unless-stopped
-    command: "python devserver.py" # set embranchement dev / prod entrypoint.sh
-    volumes:
-      - .:/app #DEV ONLY!!!
     build:
       context: .
       dockerfile: Dockerfile
+      network: host
+    entrypoint: /app/entrypoint.sh
+    volumes:
+      - ".:/app" #DEV ONLY!!!
     ports:
       - "6001:5000"

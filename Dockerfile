@@ -1,4 +1,6 @@
 FROM python:3.9.1-slim
+RUN apt update && apt -y dist-upgrade
+RUN apt -y install nano
 RUN mkdir -p /app
 WORKDIR /app
 ADD requirements.txt /app

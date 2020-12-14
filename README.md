@@ -32,7 +32,7 @@ docker-compose up --build
 
 #### Installation Steps
 
-1. Clone [this repository]() on your machine
+1. Clone [this repository](https://github.com/yverdon/pytree) on your machine
 2. Open a command line in the project directory
 3. Create a virtual environnement and update pip
 

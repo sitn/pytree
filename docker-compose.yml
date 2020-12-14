@@ -6,7 +6,7 @@ volumes:
 services:
   api:
     restart: unless-stopped
-    command: "python devserver.py"
+    command: "python devserver.py" # set embranchement dev / prod entrypoint.sh
     volumes:
       - .:/app #DEV ONLY!!!
     build:

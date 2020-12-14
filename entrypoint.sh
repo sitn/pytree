@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "########################: ${DEPLOY_ENV}"
+echo "Environment set to: ${DEPLOY_ENV}"
 
 if [ "${DEPLOY_ENV}" = "DEV" ];
 then

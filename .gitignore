@@ -2,6 +2,8 @@
 *.pyc
 *.in
 *.env
+/profile
+/data
 /.build
 /env
 /log

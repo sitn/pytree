@@ -1,6 +1,7 @@
 *~
 *.pyc
 *.in
+*.env
 /.build
 /env
 /log

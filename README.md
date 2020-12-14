@@ -18,8 +18,9 @@ chmod +x extract_profile
 ### The Docker Way
 
 ```
-docker-compose down --remove-orphans -v    
-docker-compose up --build
+docker-compose down --remove-orphans -v  
+docker-compose build --no-cache  
+docker-compose up
 ```
 
 

@@ -56,6 +56,7 @@ def get_profile():
     attributes = [request.args['attributes']]
     p = subprocess.Popen([cpotree, potree_file, "--stdout"] + attributes +
         [
+            "-o", 'stdout',
             "--coordinates", polyline,
             "--width", width,
             "--min-level", minLevel,

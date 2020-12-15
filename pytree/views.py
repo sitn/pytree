@@ -39,30 +39,30 @@ def home(name=None):
 @app.route("/profile/get")
 @cross_origin()
 def get_profile():
+    """ Docstring
+    """
     cpotree = pytree_config['vars']['cpotree_executable']
-
     point_clouds = pytree_config['vars']['pointclouds']
-
     polyline = request.args['coordinates']
-
     if polyline == '':
         return 'Empty coordinates'
 
     maxLevel = request.args['maxLOD']
     minLevel = request.args['minLOD']
-
     width = request.args['width']
     point_cloud = request.args['pointCloud']
-    file = point_clouds[point_cloud]
+    potree_file = point_clouds[point_cloud]
     attributes = [request.args['attributes']]
-    p = subprocess.Popen(
-        [cpotree, file, "--stdout"] + attributes +
-        ["--coordinates", polyline,
+    p = subprocess.Popen([cpotree, potree_file, "--stdout"] + attributes +
+        [
+            "--coordinates", polyline,
             "--width", width,
             "--min-level", minLevel,
-            "--max-level", maxLevel],
+            "--max-level", maxLevel
+        ],
         bufsize=-1,
-        stdout=subprocess.PIPE)
+        stdout=subprocess.PIPE
+    )
 
     [out, err] = p.communicate()
 
@@ -112,18 +112,22 @@ def get_profile_gmf1():
 
     log_profiles(log_folder, coords)
 
-    file = point_clouds[point_cloud]
+    potree_file = point_clouds[point_cloud]
 
     p = subprocess.Popen(
-        [cpotree, file, "--stdout"] +
-        ["--coordinates", potreeGeom,
-            "--width", width, "--min-level",
-            minLevel, "--max-level",
-            str(adaptativeLevel)], bufsize=-1, stdout=subprocess.PIPE)
+        [cpotree, potree_file, "--stdout"] + [
+            "--coordinates", potreeGeom,
+            "--width", width,
+            "--min-level", minLevel,
+            "--max-level", str(adaptativeLevel)
+        ],
+        bufsize=-1,
+        stdout=subprocess.PIPE
+    )
 
     [out, err] = p.communicate()
 
-    headerSize = struct.unpack('i', out[0:4])[0];
+    headerSize = struct.unpack('i', out[0:4])[0]
     header = out[4:4+headerSize].decode("ascii")
     buffer = out[4+headerSize:]
     try:

@@ -6,7 +6,7 @@ height profile from [LiDAR](https://en.wikipedia.org/wiki/Lidar) data.
 
 ## Requirements
 Extract release 0.2 of [cPotree](https://github.com/potree/CPotree/releases/tag/0.2)
-to `./bin` and give the executable file `extract_profile` actually executable:
+to `./bin` and make the file `extract_profile` actually executable:
 
 ```
 chmod +x extract_profile
@@ -16,6 +16,17 @@ chmod +x extract_profile
 ## Installation
 
 ### The Docker Way
+
+First, clone [this repository](https://github.com/yverdon/pytree) on your machine.
+
+```
+git clone git@github.com:yverdon/pytree.git && cd pytree
+```
+
+Then, create your `.env` file with a `DEPLOY_ENV` variable set to either `DEV`
+or `PROD`.
+
+Finally run the 3 following commands:    
 
 ```
 docker-compose down --remove-orphans -v  
@@ -33,7 +44,7 @@ docker-compose up
 
 #### Installation Steps
 
-1. Clone [this repository](https://github.com/yverdon/pytree) on your machine
+
 2. Open a command line in the project directory
 3. Create a virtual environnement and update pip
 
@@ -61,3 +72,17 @@ Warning: debug mode is currently activated by default
 
 Example Apache 2.4 WSGI configuration files are in `apache_demo_config` directory.
 You'll need to adapt to you local setup
+
+
+## Usage
+Once the container has started, [start a shell](https://docs.docker.com/engine/reference/commandline/exec/) inside:
+
+```
+docker exec -it pytree_api_1 bash
+```
+
+Then execute `extract_profile`:    
+
+```
+extract_profile data/processed/metadata.json -o data/output/test.las --coordinates "{2525528.12,1185781.87},{2525989.37,1185541.87}" --width 10 --min-level 0 --max-level 5
+```

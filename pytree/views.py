@@ -15,8 +15,8 @@ import urllib
 import math
 from flask_cors import cross_origin
 from pytree.logging import log_profiles
-
 #%%
+
 yaml_config_file = (dirname(abspath(__file__)) + ".yml")
 with open(yaml_config_file, 'r') as f:
     pytree_config = yaml.load(f, Loader=FullLoader)
@@ -25,16 +25,16 @@ with open(yaml_config_file, 'r') as f:
 @app.context_processor
 def yaml_config_vars():
     return dict(yaml_config_vars=get_yaml_config_vars())
-
+#%%
 
 def get_yaml_config_vars():
     return pytree_config
-
+#%%
 
 @app.route('/')
 def home(name=None):
     return render_template('home.html', name=name)
-
+#%%
 
 @app.route("/profile/get")
 @cross_origin()
@@ -67,7 +67,7 @@ def get_profile():
     [out, err] = p.communicate()
 
     return out
-
+#%%
 
 @app.route("/profile_v1/get")
 @cross_origin()
@@ -204,7 +204,7 @@ def get_profile_gmf1():
     jsonp += str(las_extractor_output)
     jsonp += ");"
     return jsonp
-
+#%%
 
 # proxy to gmf raster dem/dsm profile service
 @app.route("/dem/get")
@@ -236,7 +236,7 @@ def get_gmf_dem_dsm():
     demdsm = response.read()
 
     return jsonify(demdsm)
-
+#%%
 
 @app.route("/profile/config")
 @cross_origin()
@@ -254,14 +254,14 @@ def profile_config_gmf2():
         vars.pop('log_folder')
 
     return jsonify(vars)
-
+#%%
 
 class PointAttribute:
     def __init__(s, name, elements, bytes):
         s.name = name
         s.elements = elements
         s.bytes = bytes
-
+#%%
 
 class PointAttributes:
 
@@ -285,3 +285,4 @@ class PointAttributes:
     @staticmethod
     def fromName(name):
         return getattr(PointAttributes, name)
+#%%

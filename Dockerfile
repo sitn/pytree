@@ -6,7 +6,7 @@ RUN mkdir -p ./bin ./data/output ./data/processed ./data/raw
 ADD requirements.txt ./
 RUN pip3 install -r requirements.txt
 ADD ./entrypoint.sh ./ 
-RUN mkdir -p logs && chmod -R a+rw logs && chmod +x ./entrypoint.sh
+RUN chmod +x ./entrypoint.sh
 
 
 RUN echo 'deb http://deb.debian.org/debian testing main' >> /etc/apt/sources.list

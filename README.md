@@ -84,5 +84,5 @@ docker exec -it pytree_api_1 bash
 Then execute `extract_profile`:    
 
 ```
-extract_profile data/processed/metadata.json -o data/output/test.las --coordinates "{2525528.12,1185781.87},{2525989.37,1185541.87}" --width 10 --min-level 0 --max-level 5
+extract_profile data/processed/metadata.json -o "stdout" --coordinates "{2525528.12,1185781.87},{2525989.37,1185541.87}" --width 10 --min-level 0 --max-level 5 > data/output/test.las
 ```

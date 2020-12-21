@@ -70,38 +70,6 @@ def get_profile():
     return out
 #%%
 
-# proxy to gmf raster dem/dsm profile service
-@app.route("/dem/get")
-@cross_origin()
-def get_gmf_dem_dsm():
-
-    url = 'http://sitn.ne.ch/production/wsgi/profile.json'
-
-    coord = request.args['coord'].split(',')
-
-    coordinates = []
-    i = 0
-    while i < len(coord):
-
-        coordinates.append([int(coord[i]), int(coord[i+1])])
-        i += 2
-    nbPoints = request.args['nbPoints']
-
-    dico = {
-        'layers': 'mnt,mns',
-        'geom': '{"type":"LineString","coordinates":' + str(coordinates) + '}',
-        'nbPoints': str(nbPoints)
-    }
-
-    data = urllib.urlencode(dico)
-
-    req = urllib.Request(url, data=data)
-    response = urllib.urlopen(req)
-    demdsm = response.read()
-
-    return jsonify(demdsm)
-#%%
-
 @app.route("/profile/config")
 @cross_origin()
 def profile_config_gmf2():

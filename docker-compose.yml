@@ -10,10 +10,10 @@ services:
       DEPLOY_ENV: ${DEPLOY_ENV:-DEV}
     restart: unless-stopped
     build:
-      context: ./
+      context: .
       dockerfile: Dockerfile
       network: host
-    entrypoint: /app/entrypoint.sh
+    command: /app/start_server.sh
     volumes:
       - ".:/app" #DEV ONLY!!!
     ports:

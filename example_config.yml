@@ -15,7 +15,7 @@ vars:
   point_size: 1
   # Max point number allowed in a profile. Passed this limit (approx...), the following requests are canceled client side (gmf2)
   max_point_number: 75000
-  # Toralance of lateral movements during vertical pan. Passing this threshold, new points will be requested
+  # Tolerance of lateral movements during vertical pan. Passing this threshold, new points will be requested
   vertical_pan_tolerance: 0.2
   # max LOD for first profile request (will extend from LOD 0 to LOD initialLOD)
   initialLOD: 6

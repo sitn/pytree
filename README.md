@@ -50,7 +50,7 @@ The application runs at http://localhost:6001/pytree
 
 Please chek [https://github.com/potree/CPotree/blob/master/README.md](https://github.com/potree/CPotree/blob/master/README.md) for a comprehensive list of valid URL parameters to get a LiDAR profile.
 
-But you can also [start a shell](https://docs.docker.com/engine/reference/commandline/exec/) inside the running container to play with the executable:
+You can also [start a shell](https://docs.docker.com/engine/reference/commandline/exec/) to further explore inside the running container and play around with the executable:
 
 ```
 docker exec -it pytree_api_1 bash

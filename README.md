@@ -15,7 +15,7 @@ First, clone [this repository](https://github.com/yverdon/pytree) on your machin
 ```
 git clone git@github.com:yverdon/pytree.git && cd pytree
 ```
-If you need another version of [CPotree](https://github.com/potree/CPotree/releases/tag/0.2), extract its release into `./bin` and make the file `extract_profile` actually executable:
+If you need another version of [CPotree](https://github.com/potree/CPotree/releases/tag/0.2), extract its release files (namely `extract_profile` and `liblaszip.so`) into `./bin` and make the file `extract_profile` actually executable:
 
 ```
 chmod +x extract_profile

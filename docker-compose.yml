@@ -1,8 +1,5 @@
 version: "3.8"
 
-volumes:
-    lidardata:
-
 services:
   api:
     image: pytree:0.0.1
@@ -15,6 +12,6 @@ services:
       network: host
     command: /app/start_server.sh
     volumes:
-      - ".:/app" #DEV ONLY!!!
+      - "${DATA_DIR}:/app/data/processed"
     ports:
       - "6001:5000"

@@ -23,9 +23,9 @@ git clone git@github.com:yverdon/pytree.git && cd pytree
 ```
 
 Then, create your `.env` file with a `DEPLOY_ENV` variable set to either `DEV`
-or `PROD` and a `DATA_DIR` variable containing the absolute path to the directory
-containing your `metadata.json` file for your Potree LiDAR tiles (generated using
-[PotreeConvert](https://github.com/potree/PotreeConverter) v2.x.x).    
+or `PROD`, a `PORT` variable specify which port of your host machine you want to use,
+and a `DATA_DIR` variable containing the absolute path to the directory containing
+your `metadata.json` file for your Potree LiDAR tiles (generated using [PotreeConvert](https://github.com/potree/PotreeConverter) v2.x.x).    
 Check `.env.sample` for inspiration.
 
 Thirdly, copy `example_config.yml` to `pytree.yml` and make sure to adapt the variable to your environment.

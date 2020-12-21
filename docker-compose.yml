@@ -14,4 +14,4 @@ services:
     volumes:
       - "${DATA_DIR}:/app/data/processed"
     ports:
-      - "6001:5000"
+      - "${PORT:-6001}:5000"

@@ -43,7 +43,6 @@ def get_profile():
     """
     cpotree = pytree_config['vars']['cpotree_executable']
     point_clouds = pytree_config['vars']['pointclouds']
-    print("point_clouds: {}".format(point_clouds))
     polyline = request.args['coordinates']
     if polyline == '':
         return 'Empty coordinates'

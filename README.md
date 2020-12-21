@@ -14,7 +14,7 @@ to `./bin` and make the file `extract_profile` actually executable:
 chmod +x extract_profile
 ```
 
-You can also directly use the bin/ folder provided in this repos. Credits goes to M. Schuetz.
+You can also directly use the `bin/` folder provided in this repos. Credits goes to M. Schuetz.
 
 ## Installation
 

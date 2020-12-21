@@ -7,14 +7,6 @@ height profile from [LiDAR](https://en.wikipedia.org/wiki/Lidar) data.
 ## Requirements    
 1. You will need [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) to run the application.
 
-2. Extract release 0.2 of [CPotree](https://github.com/potree/CPotree/releases/tag/0.2)
-to `./bin` and make the file `extract_profile` actually executable:
-
-```
-chmod +x extract_profile
-```
-
-You can also directly use the `bin/` folder provided in this repos. Credit goes to M. Schuetz.
 
 ## Installation
 
@@ -23,6 +15,14 @@ First, clone [this repository](https://github.com/yverdon/pytree) on your machin
 ```
 git clone git@github.com:yverdon/pytree.git && cd pytree
 ```
+If you need another version of [CPotree](https://github.com/potree/CPotree/releases/tag/0.2), extract its release into `./bin` and make the file `extract_profile` actually executable:
+
+```
+chmod +x extract_profile
+```
+
+Otherwise, you can simply directly use the `bin/` folder provided in this repos. Credit goes to [M. Schuetz](https://github.com/m-schuetz).
+
 
 Then, create your `.env` file with a `DEPLOY_ENV` variable set to either `DEV`
 or `PROD`, a `PORT` variable specify which port of your host machine you want to use,

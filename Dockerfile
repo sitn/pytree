@@ -18,7 +18,7 @@ RUN chmod +x ./start_server.sh \
   && python -m pip install --upgrade pip \
   && pip3 install -r requirements.txt \
   && mkdir -p ./data/output ./data/processed ./data/raw \
-  && mv ./bin/extract_profile /usr/local/bin/ && ls -lart /usr/local/bin/extract_profile \
+  && mv ./bin/extract_profile /usr/local/bin/ && chmod +x /usr/local/bin/extract_profile \
   && mv ./bin/liblaszip.so /usr/local/lib && chmod +x /usr/local/lib/liblaszip.so && ldconfig \
   && echo "alias ll='ls -lArth'" >> ~/.bashrc && /bin/bash -c "source ~/.bashrc" \
   && echo "Image succcessfully build!"

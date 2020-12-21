@@ -44,7 +44,7 @@ docker-compose up --build
 
 ## Usage
 
-The application runs at http://localhost:6001
+The application runs at http://localhost:6001/pytree
 
 Please chek [https://github.com/potree/CPotree/blob/master/README.md](https://github.com/potree/CPotree/blob/master/README.md) for a comprehensive list of valid URL parameters to get a LiDAR profile.
 

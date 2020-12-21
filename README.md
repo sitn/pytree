@@ -5,7 +5,7 @@ height profile from [LiDAR](https://en.wikipedia.org/wiki/Lidar) data.
 
 
 ## Requirements    
-1. You will need [docker](https://docs.docker.com/get-docker/) to run the application.
+1. You will need [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) to run the application.
 
 2. Extract release 0.2 of [CPotree](https://github.com/potree/CPotree/releases/tag/0.2)
 to `./bin` and make the file `extract_profile` actually executable:

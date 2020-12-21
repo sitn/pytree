@@ -1,6 +1,6 @@
 # Pytree
 
-_A [Flask](http://flask.pocoo.org/)_ application serving potree to extract
+A containerized [Flask](http://flask.pocoo.org/) application serving potree to extract
 height profile from [LiDAR](https://en.wikipedia.org/wiki/Lidar) data.
 
 

@@ -8,17 +8,29 @@
 <body>
     <div id="header">
         <h1>pytree server</h1>
-		<p>
-		Well done, it looks like your wsgi flask pytree server is installed correctly.
-		</p>
-		<p>
-		This example request should return a json header followed by a (binary) array buffer to use in gmf 2.xx
-		<a target="_blank" href="https://sitn.ne.ch/pytree/pytree_dev/get_profile?minLOD=0&maxLOD=5&width=10&coordinates={2551900,%201203475},{2555100,%201206475}&pointCloud=sitn2016&attributes=%27">https://sitn.ne.ch/pytree/pytree_dev/get_profile?minLOD=0%20%20%20%20&maxLOD=5&width=10&coordinates={2551900,%201203475},{2555100,%201206475}&pointCloud=sitn2016&attributes=%27<a>
-		</p>
-		<p>
-		This example request should return a json profile for use in gmf 1.xx
-		<a target="_blank" href="https://sitnssl.ne.ch/pytree/pytree_dev/get_profile_gmf1/profile?code=&geom=%7B%22type%22%3A%22LineString%22%2C%22coordinates%22%3A%5B%5B2553030%2C1206955.0003052%5D%2C%5B2563170%2C1209315.0003052%5D%5D%7D&dataType=standard&callback=Ext.ux.JSONP.callback">https://sitnssl.ne.ch/pytree/get_profile_gmf1/profile?code=&geom=%7B%22type%22%3A%22LineString%22%2C%22coordinates%22%3A%5B%5B2553030%2C1206955.0003052%5D%2C%5B2563170%2C1209315.0003052%5D%5D%7D&dataType=standard&callback=Ext.ux.JSONP.callback<a>
-		</p>
+        <p>
+        Well done, it looks like your wsgi flask pytree server is installed correctly.
+        </p>
+        <p>
+        <a href="{{ url_for('get_profile') }}?minLOD=0&maxLOD=5&width=10&coordinates={2551900,%201203475},{2555100,%201206475}&pointCloud=sitn2016&attributes=%27" target=_blank>This example</a> request should return a json header followed by a (binary) array buffer to use in GeoMapFish 2.3 using following GET parameters:
+        <ul>
+        <li>minLOD=0</li>
+        <li>maxLOD=5</li>
+        <li>width=10</li>
+        <li>coordinates={2551900,%201203475},{2555100,%201206475}</li>
+        <li>pointCloud=sitn2016</li>
+        <li>attributes=%27</li>
+        </ul>
+        <p>
+        <a href="{{ url_for('get_profile_gmf1') }}?code=&geom=%7B%22type%22%3A%22LineString%22%2C%22coordinates%22%3A%5B%5B2553030%2C1206955.0003052%5D%2C%5B2563170%2C1209315.0003052%5D%5D%7D&dataType=standard&callback=Ext.ux.JSONP.callback" target=_blank>This example</a>
+        request should return a JSON (using a callback function) profile for use in GeoMapFish 1.6 using the following GET parameters:
+        <ul>
+        <li>code=</li>
+        <li>geom=%7B%22type%22%3A%22LineString%22%2C%22coordinates%22%3A%5B%5B2553030%2C1206955.0003052%5D%2C%5B2563170%2C1209315.0003052%5D%5D%7D</li>
+        <li>dataType=standard</li>
+        <li>callback=Ext.ux.JSONP.callback</li>
+        </ul>
+        </p>
     </div>
 </body>
 </html>

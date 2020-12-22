@@ -1,10 +1,13 @@
 *~
 *.pyc
 *.in
-/venv
+*.env
+/profile
+/data
+/.build
 /env
 /log
 /apache
 /pytree/.ipynb_checkpoints
 /pytree/pytree_main.py
-pytree.yaml
+pytree.yml

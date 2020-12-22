@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='pytree',
-    version='0.0.2',
+    version='2.0.0',
     description='potree point cloud profile extractor',
     author='potree',
     author_email='mschuetz@potree.org',

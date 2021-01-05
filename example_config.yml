@@ -1,14 +1,14 @@
 vars:
   debug: true
-  log_folder: <path_to>/pytree/log
+  log_folder: /var/log
   gmf_url: ""
   # path to cpotree exectuable
-  cpotree_executable: <path_to>/PotreeElevationProfile.exe
+  cpotree_executable: extract_profile
   # Available point clouds. NOTE: pointclouds CRS must be the same as the APP, reprojection is not implemented!
   pointclouds:
-    sitn2016: <path_to>/cloud.js
+    swissSURFACE3D: ./data/processed/metadata.json
   # point cloud to use in profile
-  default_point_cloud: sitn2016
+  default_point_cloud: swissSURFACE3D
   # default profile width
   width: 10
   # point size on d3 plot in pixels

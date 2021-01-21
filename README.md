@@ -1,39 +1,63 @@
-# potree server height profile extractor project
+# Pytree
 
-*A [Flask application](http://flask.pocoo.org/)*
+A containerized [Flask](http://flask.pocoo.org/) application serving potree to extract
+height profile from [LiDAR](https://en.wikipedia.org/wiki/Lidar) data.
 
-## Requirements
 
-0. Windows OS. Sorry about that.
-1. Python 3.7
+## Requirements    
+1. You will need [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) to run the application.
+
 
 ## Installation
 
-1. Clone this repository on your machine
-2. Open a command line in the project directory
-3. Create a virtual environnement and update pip
+First, clone [this repository](https://github.com/yverdon/pytree) on your machine.
 
 ```
-python -m venv --system-site-packages .build/venv
-.build\venv\Scripts\python -m pip install --upgrade pip
+git clone git@github.com:yverdon/pytree.git && cd pytree
 ```
-
-4. Install dependencies with correct version:
+If you need another version of [CPotree](https://github.com/potree/CPotree/releases/tag/0.2), extract its release files (namely `extract_profile` and `liblaszip.so`) into `./bin` and make the file `extract_profile` actually executable:
 
 ```
-.build\venv\Scripts\python -m pip install -r requirements.txt
+chmod +x extract_profile
 ```
 
-## Starting the developpement server
+Otherwise, you can simply directly use the `bin/` folder provided in this repos. Credit goes to [M. Schuetz](https://github.com/m-schuetz).
 
-Warning: debug mode is currently activated by default
 
-1. Edit pytree.yaml configuration file if needed
-2. Run the server: ```python runserver.py```
-3. If the dev server runs fine, the adress [localhost:5000](localhost:5000) will display a demo page
-4. Note: pointcloud CRS must be the same as the app calling for profiles. Reprojection is not implemented
+Then, create your `.env` file with a `DEPLOY_ENV` variable set to either `DEV`
+or `PROD`, a `PORT` variable specify which port of your host machine you want to use,
+and a `DATA_DIR` variable containing the absolute path to the directory containing
+your `metadata.json` file for your Potree LiDAR tiles (generated using [PotreeConvert](https://github.com/potree/PotreeConverter) v2.x.x).    
+Check `.env.sample` for inspiration.
 
-## Production setup
+Thirdly, copy `example_config.yml` to `pytree.yml` and make sure to adapt the variable to your environment.
+Especially adapt the following four variables:
+  - log_folder
+  - cpotree_executable
+  - pointclouds
+  - default_point_cloud
 
-Example Apache 2.4 WSGI configuration files are in ```apache_demo_config``` directory.
-You'll need to adapt to you local setup
+Finally run the 2 following commands:    
+
+```
+docker-compose down --remove-orphans -v    
+docker-compose up --build    
+```
+
+## Usage
+
+The application runs at http://localhost:6001/pytree
+
+Please chek [https://github.com/potree/CPotree/blob/master/README.md](https://github.com/potree/CPotree/blob/master/README.md) for a comprehensive list of valid URL parameters to get a LiDAR profile.
+
+You can also [start a shell](https://docs.docker.com/engine/reference/commandline/exec/) to further explore inside the running container and play around with the executable:
+
+```
+docker exec -it pytree_api_1 bash
+```
+
+Then execute `extract_profile`:    
+
+```
+extract_profile data/processed/metadata.json -o "stdout" --coordinates "{2525528.12,1185781.87},{2525989.37,1185541.87}" --width 10 --min-level 0 --max-level 5 > data/output/test.las
+```

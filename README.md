@@ -32,7 +32,6 @@ Check `.env.sample` for inspiration.
 
 Thirdly, copy `example_config.yml` to `pytree.yml` and make sure to adapt the variable to your environment.
 Especially adapt the following four variables:
-  - log_folder
   - cpotree_executable
   - pointclouds
   - default_point_cloud

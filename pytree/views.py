@@ -1,21 +1,12 @@
 # -*- coding: utf-8 -*-
-
-#%%
 from pytree import app
 from flask import request, render_template
 from flask import jsonify
-import os, sys
-from os.path import join, abspath, dirname
+from os.path import abspath, dirname
 import subprocess
-import struct
-import json
 import yaml
 from yaml import FullLoader
-import urllib
-import math
 from flask_cors import cross_origin
-from pytree.logging import log_profiles
-#%%
 
 yaml_config_file = (dirname(abspath(__file__)) + ".yml")
 with open(yaml_config_file, 'r') as f:
@@ -25,16 +16,16 @@ with open(yaml_config_file, 'r') as f:
 @app.context_processor
 def yaml_config_vars():
     return dict(yaml_config_vars=get_yaml_config_vars())
-#%%
+
 
 def get_yaml_config_vars():
     return pytree_config
-#%%
+
 
 @app.route('/')
 def home(name=None):
     return render_template('home.html', name=name)
-#%%
+
 
 @app.route("/profile/get")
 @cross_origin()
@@ -68,7 +59,7 @@ def get_profile():
     [out, err] = p.communicate()
 
     return out
-#%%
+
 
 @app.route("/profile/config")
 @cross_origin()
@@ -82,18 +73,15 @@ def profile_config_gmf2():
     if 'pointclouds' in vars:
         vars.pop('pointclouds')
 
-    if 'log_folder' in vars:
-        vars.pop('log_folder')
-
     return jsonify(vars)
-#%%
+
 
 class PointAttribute:
     def __init__(s, name, elements, bytes):
         s.name = name
         s.elements = elements
         s.bytes = bytes
-#%%
+
 
 class PointAttributes:
 
@@ -117,4 +105,3 @@ class PointAttributes:
     @staticmethod
     def fromName(name):
         return getattr(PointAttributes, name)
-#%%

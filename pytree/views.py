@@ -2,16 +2,17 @@
 from pytree import app
 from flask import request, render_template
 from flask import jsonify
-from os.path import abspath, dirname
+from os import path
 import subprocess
 import yaml
 from yaml import FullLoader
 from flask_cors import cross_origin
 
-yaml_config_file = (dirname(abspath(__file__)) + ".yml")
+yaml_config_file = (path.dirname(path.abspath(__file__)) + ".yml")
 with open(yaml_config_file, 'r') as f:
     pytree_config = yaml.load(f, Loader=FullLoader)
 
+import logging
 
 @app.context_processor
 def yaml_config_vars():
@@ -44,14 +45,19 @@ def get_profile():
     point_cloud = request.args['pointCloud']
     potree_file = point_clouds[point_cloud]
     attributes = [request.args['attributes']]
-    p = subprocess.Popen([cpotree, potree_file, "--stdout"] + attributes +
-        [
-            "-o", 'stdout',
-            "--coordinates", polyline,
-            "--width", width,
-            "--min-level", minLevel,
-            "--max-level", maxLevel
-        ],
+    
+    if path.isfile(potree_file) == False:
+        return 'metadata.json file not found'
+    
+    cmd = [cpotree, potree_file, "--stdout"] + attributes + [
+        "-o", 'stdout',
+        "--coordinates", polyline,
+        "--width", width,
+        "--min-level", minLevel,
+        "--max-level", maxLevel
+    ]
+    
+    p = subprocess.Popen(cmd,
         bufsize=-1,
         stdout=subprocess.PIPE
     )

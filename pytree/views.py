@@ -1,23 +1,14 @@
 # -*- coding: utf-8 -*-
-
-#%%
 from pytree import app
 from flask import request, render_template
 from flask import jsonify
-import os, sys
-from os.path import join, abspath, dirname
+from os import path
 import subprocess
-import struct
-import json
 import yaml
 from yaml import FullLoader
-import urllib
-import math
 from flask_cors import cross_origin
-from pytree.logging import log_profiles
-#%%
 
-yaml_config_file = (dirname(abspath(__file__)) + ".yml")
+yaml_config_file = (path.dirname(path.abspath(__file__)) + ".yml")
 with open(yaml_config_file, 'r') as f:
     pytree_config = yaml.load(f, Loader=FullLoader)
 
@@ -25,16 +16,16 @@ with open(yaml_config_file, 'r') as f:
 @app.context_processor
 def yaml_config_vars():
     return dict(yaml_config_vars=get_yaml_config_vars())
-#%%
+
 
 def get_yaml_config_vars():
     return pytree_config
-#%%
+
 
 @app.route('/')
 def home(name=None):
     return render_template('home.html', name=name)
-#%%
+
 
 @app.route("/profile/get")
 @cross_origin()
@@ -53,14 +44,19 @@ def get_profile():
     point_cloud = request.args['pointCloud']
     potree_file = point_clouds[point_cloud]
     attributes = [request.args['attributes']]
-    p = subprocess.Popen([cpotree, potree_file, "--stdout"] + attributes +
-        [
-            "-o", 'stdout',
-            "--coordinates", polyline,
-            "--width", width,
-            "--min-level", minLevel,
-            "--max-level", maxLevel
-        ],
+    
+    if path.isfile(potree_file) == False:
+        return 'metadata.json file not found'
+    
+    cmd = [cpotree, potree_file, "--stdout"] + attributes + [
+        "-o", 'stdout',
+        "--coordinates", polyline,
+        "--width", width,
+        "--min-level", minLevel,
+        "--max-level", maxLevel
+    ]
+    
+    p = subprocess.Popen(cmd,
         bufsize=-1,
         stdout=subprocess.PIPE
     )
@@ -68,7 +64,7 @@ def get_profile():
     [out, err] = p.communicate()
 
     return out
-#%%
+
 
 @app.route("/profile/config")
 @cross_origin()
@@ -82,18 +78,15 @@ def profile_config_gmf2():
     if 'pointclouds' in vars:
         vars.pop('pointclouds')
 
-    if 'log_folder' in vars:
-        vars.pop('log_folder')
-
     return jsonify(vars)
-#%%
+
 
 class PointAttribute:
     def __init__(s, name, elements, bytes):
         s.name = name
         s.elements = elements
         s.bytes = bytes
-#%%
+
 
 class PointAttributes:
 
@@ -117,4 +110,4 @@ class PointAttributes:
     @staticmethod
     def fromName(name):
         return getattr(PointAttributes, name)
-#%%
+

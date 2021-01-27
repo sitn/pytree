@@ -1,6 +1,5 @@
 vars:
   debug: true
-  log_folder: /var/log
   gmf_url: ""
   # path to cpotree exectuable
   cpotree_executable: extract_profile

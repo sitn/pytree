@@ -110,3 +110,4 @@ class PointAttributes:
     @staticmethod
     def fromName(name):
         return getattr(PointAttributes, name)
+

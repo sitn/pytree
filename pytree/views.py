@@ -12,7 +12,6 @@ yaml_config_file = (path.dirname(path.abspath(__file__)) + ".yml")
 with open(yaml_config_file, 'r') as f:
     pytree_config = yaml.load(f, Loader=FullLoader)
 
-import logging
 
 @app.context_processor
 def yaml_config_vars():

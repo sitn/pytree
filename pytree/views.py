@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from pytree import app
-from flask import request, render_template
-from flask import jsonify
+from flask import jsonify, request, render_template
 from os import path
 import subprocess
 import yaml
@@ -32,10 +31,15 @@ def home(name=None):
 def get_profile():
     """ Docstring
     """
+    app.logger.debug('Pytree config:')
+    app.logger.debug(pytree_config)
+
     cpotree = pytree_config['vars']['cpotree_executable']
     point_clouds = pytree_config['vars']['pointclouds']
     polyline = request.args['coordinates']
+
     if polyline == '':
+        app.logger.error('Polyline could not be generated')
         return 'Empty coordinates'
 
     maxLevel = request.args['maxLOD']
@@ -45,7 +49,11 @@ def get_profile():
     potree_file = point_clouds[point_cloud]
     attributes = [request.args['attributes']]
     
+    app.logger.debug('Request args:')
+    app.logger.debug(request.args)
+
     if path.isfile(potree_file) == False:
+        app.logger.error('metadata.json file not found could not be found')
         return 'metadata.json file not found'
     
     cmd = [cpotree, potree_file, "--stdout"] + attributes + [
@@ -56,6 +64,9 @@ def get_profile():
         "--max-level", maxLevel
     ]
     
+    app.logger.debug('Subprocess command:')
+    app.logger.debug(cmd)
+
     p = subprocess.Popen(cmd,
         bufsize=-1,
         stdout=subprocess.PIPE

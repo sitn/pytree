@@ -60,7 +60,9 @@ sudo vi /etc/fstab
 
 And add your Window share. this might look like something:
 
+```
 //windows_share/pointclouds                 /mnt/pointclouds  cifs    user=windows_username,password=windows_password               0       0
+```
 
 Then, in your `mnt` folder, create a pointcloud folder:
 

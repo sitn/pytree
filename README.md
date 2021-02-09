@@ -43,6 +43,36 @@ docker-compose down --remove-orphans -v
 docker-compose up --build    
 ```
 
+## Using Windows WSL
+
+The first time you use your Debian WSL distro:
+
+```
+sudo apt-get update
+sudo apt-get install docker.io
+```
+
+Then, you will have to mount your share where `metadata.json` can be found. To do so, edit the fstab file:
+
+```
+sudo vi /etc/fstab
+```
+
+And add your Window share. this might look like something:
+
+//windows_share/pointclouds                 /mnt/pointclouds  cifs    user=windows_username,password=windows_password               0       0
+
+Then, in your `mnt` folder, create a pointcloud folder:
+
+```
+sudo mkdir pointcloud
+sudo mount -a
+```
+
+From one time to the other, you might have to rerun `sudo mount -a` in order to mount the share.
+
+All Docker cmd have to be run in `sudo` mode.
+
 ## Usage
 
 The application runs at http://localhost:6001/pytree

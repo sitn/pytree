@@ -21,3 +21,4 @@ RUN chmod +x ./start_server.sh \
   && echo "alias ll='ls -lArth'" >> ~/.bashrc && /bin/bash -c "source ~/.bashrc" \
   && echo "Image succcessfully build!"
 
+ENV PYTHONUNBUFFERED=1

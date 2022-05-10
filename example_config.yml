@@ -147,9 +147,9 @@ vars:
       element: 1
       bytes: 2
       visible: 1
-    RGB: # use COLOR_PACKED instead for SITN data sets
+    RGB:
       name: Couleur
-      value: RGB
+      value: RGB # use COLOR_PACKED as value here for SITN data sets
       elements: 4
       bytes: 3
       visible: 0

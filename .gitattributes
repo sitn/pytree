@@ -16,6 +16,7 @@ eval-templates text eol=lf
 *.sh text eol=lf
 
 # Binaries
+/bin/* binary
 *.png binary
 *.jpg binary
 *.ttf binary

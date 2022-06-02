@@ -16,6 +16,8 @@ eval-templates text eol=lf
 *.sh text eol=lf
 
 # Binaries
+extract_profile binary
+liblaszip.so binary
 *.png binary
 *.jpg binary
 *.ttf binary

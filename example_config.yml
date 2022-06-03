@@ -5,7 +5,7 @@ vars:
   cpotree_executable: extract_profile
   # Available point clouds. NOTE: pointclouds CRS must be the same as the APP, reprojection is not implemented!
   pointclouds:
-    swissSURFACE3D: ./data/processed/metadata.json
+    swissSURFACE3D: ./path/to/metadata.json
   # point cloud to use in profile
   default_point_cloud: swissSURFACE3D
   # default profile width

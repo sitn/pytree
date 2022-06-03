@@ -87,7 +87,7 @@ def profile_config_gmf2():
         vars.pop('cpotree_executable')
 
     if 'pointclouds' in vars:
-        vars.pop('pointclouds')
+        vars['pointclouds'] = list(vars['pointclouds'].keys())
 
     return jsonify(vars)
 

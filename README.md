@@ -4,17 +4,14 @@ A containerized [Flask](http://flask.pocoo.org/) application serving potree to e
 height profile from [LiDAR](https://en.wikipedia.org/wiki/Lidar) data.
 
 
-## Requirements    
+## Requirements
 1. You will need [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) to run the application.
 
 
 ## Installation
 
-First, clone [this repository](https://github.com/yverdon/pytree) on your machine.
+Clone this repository on your machine.
 
-```
-git clone git@github.com:yverdon/pytree.git && cd pytree
-```
 If you need another version of [CPotree](https://github.com/potree/CPotree/releases/tag/0.2), extract its release files (namely `extract_profile` and `liblaszip.so`) into `./bin` and make the file `extract_profile` actually executable:
 
 ```
@@ -36,11 +33,11 @@ Especially adapt the following four variables:
   - pointclouds
   - default_point_cloud
 
-Finally run the 2 following commands:    
+Finally run the 2 following commands:
 
 ```
-docker-compose down --remove-orphans -v    
-docker-compose up --build    
+docker-compose down --remove-orphans -v
+docker-compose up --build
 ```
 
 ## Using Windows WSL

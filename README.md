@@ -12,7 +12,7 @@ height profile from [LiDAR](https://en.wikipedia.org/wiki/Lidar) data.
 
 Clone this repository on your machine.
 
-If you need another version of [CPotree](https://github.com/potree/CPotree/releases/tag/0.2), extract its release files (namely `extract_profile` and `liblaszip.so`) into `./bin` and make the file `extract_profile` actually executable:
+You will need to download binaries for [CPotree](https://github.com/potree/CPotree/releases/tag/0.3), extract its release files (namely `extract_profile` and `liblaszip.so`) into `./bin` and make the file `extract_profile` actually executable:
 
 ```
 chmod +x extract_profile

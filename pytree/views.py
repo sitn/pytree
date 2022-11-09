@@ -67,9 +67,9 @@ def get_profile():
     cmd = [cpotree, potree_file, "--stdout"] + [
         "-o", 'stdout',
         "--coordinates", coordinates,
-        "--width", width,
-        "--min-level", minLOD,
-        "--max-level", maxLOD
+        "--width", str(width),
+        "--min-level", str(minLOD),
+        "--max-level", str(maxLOD)
     ]
 
     app.logger.debug('Subprocess command:')

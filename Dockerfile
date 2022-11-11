@@ -1,4 +1,4 @@
-FROM debian:sid-slim
+FROM debian:bullseye-slim
 
 WORKDIR /app
 

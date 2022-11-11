@@ -5,9 +5,8 @@ import os
 
 app = Flask(__name__)
 
-if 'DEPLOY_ENV' in os.environ and  os.environ['DEPLOY_ENV'] == 'DEV':
+app.logger.setLevel(logging.ERROR)
+if os.environ.get('DEPLOY_ENV') == 'DEV':
     app.logger.setLevel(logging.DEBUG)
-else:
-    app.logger.setLevel(logging.ERROR)
 
 import pytree.views

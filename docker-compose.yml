@@ -2,13 +2,10 @@ version: "3.8"
 
 services:
   api:
+    image: sitn/pytree:1.0
     environment:
       DEPLOY_ENV: ${DEPLOY_ENV:-DEV}
     restart: unless-stopped
-    build:
-      context: .
-      dockerfile: Dockerfile
-      network: host
     command: /app/start_server.sh
     volumes:
       - "${DATA_DIR}:/app/data"

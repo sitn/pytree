@@ -1,4 +1,4 @@
-FROM ubuntu:focal AS base
+FROM ubuntu:22.04 AS compiler
 LABEL maintainer SITN "sitn@ne.ch" 
 
 WORKDIR /tmp
@@ -7,34 +7,41 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
   && apt-get upgrade --assume-yes \
-  && apt-get install --assume-yes build-essential cmake \ 
-  && apt-get install --assume-yes --no-install-recommends apt-transport-https \
-    python3 python-is-python3 python3-pip git \
-  && apt-get -y autoremove --purge && apt-get -y autoclean
+  && apt-get install --assume-yes build-essential cmake git
 
 RUN git clone https://github.com/potree/CPotree.git \
   && cd CPotree \
   && mkdir build \
   && cd build \
-  && cmake ../ \
+  && cmake -Wno-deprecated --log-level=ERROR ../ \
   && make
 
-COPY requirements.txt requirements.txt
+#######################################################################################################################
 
-RUN python -m pip install --upgrade pip \
-  && pip3 install -r requirements.txt
+FROM ubuntu:22.04 as runner
 
-COPY . /app
+ENV PIP_ROOT_USER_ACTION=ignore
 
-FROM base as runner
+RUN apt-get update \
+  && apt-get upgrade --assume-yes \
+  && apt-get install --assume-yes python3 python-is-python3 python3-pip \
+  && apt-get -y autoremove --purge && apt-get -y autoclean
 
 WORKDIR /app
 
-COPY /tmp/CPotree/build ./bin
+COPY requirements.txt requirements.txt
+
+RUN pip3 install -r requirements.txt
+
+COPY . /app
+
+COPY --from=compiler /tmp/CPotree/build/extract_profile /usr/local/bin
+COPY --from=compiler /tmp/CPotree/build/liblaszip.so /usr/local/lib
 
 RUN chmod +x ./start_server.sh \
-  && mv ./bin/extract_profile /usr/local/bin/ && chmod +x /usr/local/bin/extract_profile \
-  && mv ./bin/liblaszip.so /usr/local/lib && chmod +x /usr/local/lib/liblaszip.so && ldconfig
+  && chmod +x /usr/local/bin/extract_profile \
+  && chmod +x /usr/local/lib/liblaszip.so \
+  && ldconfig
 
 ENV PYTHONUNBUFFERED=1
 

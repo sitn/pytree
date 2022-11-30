@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM ubuntu:22.04
 
 WORKDIR /app
 
@@ -19,3 +19,4 @@ RUN chmod +x ./start_server.sh \
   && mv ./bin/liblaszip.so /usr/local/lib && chmod +x /usr/local/lib/liblaszip.so && ldconfig
 
 ENV PYTHONUNBUFFERED=1
+

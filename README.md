@@ -32,6 +32,12 @@ docker-compose down --remove-orphans -v
 docker-compose up
 ```
 
+## Update CPotree
+
+In order to update to the last version of CPotree, you'll need to compile the new version. This is possible by building a new pytree image: `docker build -t sitn/pytree:<tag_version> .`
+
+Replace <tag_version> by whatever version you want and if it's working you can push it to docker hub and update the docker-compose.yml accordingly (image with new tag you just created).
+
 ## Using Windows WSL
 
 The first time you use your Debian WSL distro:

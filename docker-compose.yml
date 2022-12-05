@@ -2,12 +2,13 @@ version: "3.8"
 
 services:
   api:
-    image: sitn/pytree:1.0
+    image: sitn/pytree:1.0.5
     environment:
       DEPLOY_ENV: ${DEPLOY_ENV:-DEV}
     restart: unless-stopped
     command: /app/start_server.sh
     volumes:
-      - "${DATA_DIR}:/app/data"
+      - ${DATA_DIR}:/app/data
+      - ${PWD}/pytree.yml:/app/pytree.yml
     ports:
       - "${PORT:-6001}:5000"

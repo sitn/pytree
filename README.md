@@ -9,6 +9,10 @@ Credit goes to [M. Schuetz](https://github.com/m-schuetz) for the development of
 
 You will need [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) to run the application.
 
+Context of pytree
+
+![Diagramme sans nom drawio(8)](https://github.com/sitn/pytree/assets/3328875/61059604-e9d5-4d57-bd10-ab4593193de4)
+
 ## Installation
 
 Clone this repository on your machine.

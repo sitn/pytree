@@ -1,8 +1,6 @@
 vars:
   debug: true
-  gmf_url: ""
-  # path to cpotree exectuable
-  cpotree_executable: extract_profile
+  cpotree_executable: ./path/to/extract_profile
   # Available point clouds. NOTE: pointclouds CRS must be the same as the APP, reprojection is not implemented!
   pointclouds:
     swissSURFACE3D: ./path/to/metadata.json

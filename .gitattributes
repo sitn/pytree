@@ -1,30 +1,13 @@
 # Set default behaviour, in case users don't have core.autocrlf set.
 * text eol=lf
 
-# Explicitly declare text files we want to always be normalized and converted 
-# to native line endings on checkout.
-*.js text
+# Explicitly declare text files we want to always be normalized and converted to native line endings on checkout.
 *.py text
 *.html text
-*.in text
-*.css text
-*.svg text
 
 # File that will always have UNIX style endings
 entrypoint text eol=lf
 eval-templates text eol=lf
-*.sh text eol=lf
 
 # Binaries
-/bin/* binary
 extract_profile binary
-liblaszip.so binary
-*.png binary
-*.jpg binary
-*.ttf binary
-*.eot binary
-*.woff binary
-*.woff2 binary
-*.xcf binary
-*.zip binary
-*.tar.gz binary

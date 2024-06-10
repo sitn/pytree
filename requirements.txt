@@ -1,4 +1,6 @@
-Flask==2.2.2
-Flask-Cors==3.0.10
-gunicorn==20.1.0
-PyYAML==6.0
+Flask
+Flask-Cors
+flask-sock
+waitress
+PyYAML
+python-dotenv

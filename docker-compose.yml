@@ -1,5 +1,4 @@
 version: "3.8"
-
 services:
   api:
     image: sitn/pytree:1.0.5

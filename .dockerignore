@@ -1,5 +1,4 @@
 *.pyc
-data/
-profile/
 pytree.yml
+cpotree/*
 

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pytree Websocket example</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 1320px;
+            width: 100%;
+            margin-right: auto;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pytree Websocket example</h1>
+    <p>
+        TODO : documentation
+    </p>
+    <textarea id="params">
+{
+    "maxPoints":10,
+    "width":6,
+    "coordinates":"{2560911.4,1204479.1},{2561593.4,1204711.3}",
+    "pointCloud":"swissSURFACE3D"
+}
+    </textarea>
+    <button onclick="start()">Start connection</button>
+    <script>
+        function start(){
+            const socket = new WebSocket('ws://127.0.0.1:6001/echo');
+            socket.addEventListener('message', m => {
+                console.log(m.data)
+            });
+            socket.onopen = () => socket.send(document.getElementById("params").value )
+        }
+    </script>
+</body>
+</html>

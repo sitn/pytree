@@ -1,40 +1,38 @@
 # Pytree
 
-A containerized [Flask](http://flask.pocoo.org/) application serving potree to extract
-height profile from [LiDAR](https://en.wikipedia.org/wiki/Lidar) data.
+A containerized [Flask](http://flask.pocoo.org/) application serving potree [LiDAR](https://en.wikipedia.org/wiki/Lidar) profiles. Credit goes to [M. Schuetz](https://github.com/m-schuetz) for the development of [CPotree](https://github.com/potree/CPotree).
 
-Credit goes to [M. Schuetz](https://github.com/m-schuetz) for the development of [CPotree](https://github.com/potree/CPotree).
+## Context of Pytree
 
-## Requirements
-
-You will need [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) to run the application.
-
-Context of pytree
-
-![Diagramme sans nom drawio(8)](https://github.com/sitn/pytree/assets/3328875/61059604-e9d5-4d57-bd10-ab4593193de4)
+![Context of pytree](https://github.com/sitn/pytree/assets/3328875/61059604-e9d5-4d57-bd10-ab4593193de4)
 
 ## Installation
 
-Clone this repository on your machine.
+### Using Docker
 
-Then, create your `.env` file with a `DEPLOY_ENV` variable set to either `DEV`
-or `PROD`, a `PORT` variable specify which port of your host machine you want to use,
-and a `DATA_DIR` variable containing the absolute path to the directory containing
-your `metadata.json` file for your Potree LiDAR tiles (generated using [PotreeConvert](https://github.com/potree/PotreeConverter) v2.x.x).
-Check `.env.sample` for inspiration.
+You will need [Docker](https://docs.docker.com/get-docker/) and [Docker-compose](https://docs.docker.com/compose/install/) to run the application.
 
-Thirdly, copy `example_config.yml` to `pytree.yml` and make sure to adapt the variable to your environment.
-Especially adapt the following four variables:
+1. Clone this repository on your machine.
+2. Create your `.env` file with 
+  - A `DEPLOY_ENV` variable set to either `DEV` or `PROD`, 
+  - A `PORT` variable specify which port of your host machine you want to use
+  - A `DATA_DIR` variable containing the absolute path to the directory containing your `metadata.json` file for your Potree LiDAR tiles (generated using [PotreeConvert](https://github.com/potree/PotreeConverter) v2.x.x).
+Check `.env.sample` for an example.
+
+3. Copy `pytree_example.yml` to `pytree.yml` and adapt the variable to your environment. Especially the following :
   - cpotree_executable
   - pointclouds
   - default_point_cloud
 
-Finally run the 2 following commands:
+4. Run docker using the 2 following commands:
 
 ```
 docker-compose down --remove-orphans -v
 docker-compose up
 ```
+
+### Without Docker
+TODO
 
 ## Update CPotree
 
@@ -71,7 +69,6 @@ sudo mount -a
 ```
 
 From one time to the other, you might have to rerun `sudo mount -a` in order to mount the share.
-
 All Docker cmd have to be run in `sudo` mode.
 
 ## Usage

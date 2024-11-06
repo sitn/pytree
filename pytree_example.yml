@@ -1,6 +1,5 @@
 vars:
   debug: true
-  cpotree_executable: ./cpotree/extract_profile.exe
   # Available point clouds. NOTE: pointclouds CRS must be the same as the APP, reprojection is not implemented!
   pointclouds:
     swissSURFACE3D: ./cpotree/data/2561_1204/metadata.json

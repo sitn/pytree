@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     command: python /app/start.py
     volumes:
-      - ${DATA_DIR}:/app/data
+      - ${DATA_DIR}:/app/${DATA_DIR}
       - ${CONFIG_FILE}:/app/pytree.yml
     ports:
       - "${PORT}:${PORT}"

@@ -7,7 +7,7 @@ COORD_REGEX = r'\{([0-9]+(\.[0-9]+)?), ?([0-9]+(\.[0-9]+)?)\}, ?(\{([0-9]+(\.[0-
 REQUIRED_PARAMETERS_SOCKET = ['coordinates', 'width', 'pointCloud']
 REQUIRED_PARAMETERS_HTTP = ['coordinates', 'width', 'pointCloud', 'minLOD', 'maxLOD']
 
-def start_app(config_file):
+def start_app(config_file, cpotree_exe):
     try:
         with open(config_file, 'r') as f:
             config = yaml.load(f, Loader=yaml.FullLoader)
@@ -39,13 +39,15 @@ def start_app(config_file):
             error(400, 'The referenced pointcloud is unknown.')
 
     def cpotree(potree_file, coord, width, minLOD, maxLOD):
-        cmd = [config['vars']['cpotree_executable'], potree_file, "--stdout", "-o", 'stdout', "--coordinates", coord, "--width", str(width), "--min-level", str(minLOD), "--max-level", str(maxLOD)]
+        cmd = [cpotree_exe, potree_file, "--stdout", "-o", 'stdout', "--coordinates", coord, "--width", str(width), "--min-level", str(minLOD), "--max-level", str(maxLOD)]
         result = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
-        result_filtered = bytes(filter(lambda b: b != b'\n'[0], result)) 
         headerSize = int.from_bytes(result[0:4], byteorder='little')
-        header = json.loads(result_filtered[4:4+headerSize].decode())
+        if os.name == 'nt': # Under Windows \n are replaced by \r\n so we need to invert that
+            result = bytes(result.replace(b'\r\n', b'\n')) 
+        header_bytes = result[4:4+headerSize]
+        header = json.loads(header_bytes.decode())
         header['headerSize'] = headerSize
-        return (result_filtered, header)
+        return (result, header)
 
     @app.route("/profile/get")
     @cross_origin()

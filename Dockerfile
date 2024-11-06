@@ -21,6 +21,9 @@ RUN git clone https://github.com/potree/CPotree.git \
 FROM ubuntu:22.04 as runner
 
 ENV PIP_ROOT_USER_ACTION=ignore
+# Disable STDIN and STDOUT buffers
+ENV PYTHONUNBUFFERED=1
+ENV CPOTREE_EXE=/usr/local/bin/extract_profile
 
 RUN apt-get update \
   && apt-get upgrade --assume-yes \
@@ -36,7 +39,5 @@ WORKDIR /app
 RUN pip3 install -r requirements.txt
 
 RUN chmod +x /usr/local/bin/extract_profile \
-  && chmod +x /usr/local/lib/liblaszip.so
-
-# Disable STDIN and STDOUT buffers
-ENV PYTHONUNBUFFERED=1
+  && chmod +x /usr/local/lib/liblaszip.so \
+  && ldconfig

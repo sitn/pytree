@@ -7,7 +7,7 @@ load_dotenv()
 
 host = os.getenv('HOST')
 port = os.getenv('PORT')
-app = start_app(os.getenv('CONFIG_FILE'))
+app = start_app(os.getenv('CONFIG_FILE'), os.getenv('CPOTREE_EXE'))
 
 if os.getenv('DEPLOY_ENV') == 'PROD' :
     print("Starting pytree in production...")

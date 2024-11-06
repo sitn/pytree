@@ -1,21 +1,11 @@
 vars:
   debug: true
-  cpotree_executable: ./path/to/extract_profile
+  cpotree_executable: ./cpotree/extract_profile.exe
   # Available point clouds. NOTE: pointclouds CRS must be the same as the APP, reprojection is not implemented!
   pointclouds:
-    swissSURFACE3D: ./path/to/metadata.json
+    swissSURFACE3D: ./cpotree/data/2561_1204/metadata.json
   # point cloud to use in profile
   default_point_cloud: swissSURFACE3D
-  # default profile width
-  width: 10
-  # point size on d3 plot in pixels
-  point_size: 1
-  # Max point number allowed in a profile. Passed this limit (approx...), the following requests are canceled client side (gmf2)
-  max_point_number: 75000
-  # Tolerance of lateral movements during vertical pan. Passing this threshold, new points will be requested
-  vertical_pan_tolerance: 0.2
-  # max LOD for first profile request (will extend from LOD 0 to LOD initialLOD)
-  initialLOD: 6
   # Classification colors for GMF2
   classification_colors:
     0:
@@ -176,41 +166,3 @@ vars:
       bytes: 4
       visible: 1
 
-  # here you can define as many steps as you like
-  max_levels:
-    25:
-      max: 14
-      width: 2
-    50:
-      max: 13
-      width: 2
-    75:
-      max: 12
-      width: 3
-    100:
-      max: 11
-      width: 3
-    150:
-      max: 10
-      width: 4
-    250:
-      max: 9
-      width: 4
-    350:
-      max: 9
-      width: 4
-    500:
-      max: 8
-      width: 5
-    1000:
-      max: 8
-      width: 5
-    5000:
-      max: 7
-      width: 6
-    7500:
-      max: 6
-      width: 6
-    100000:
-      max: 6
-      width: 7

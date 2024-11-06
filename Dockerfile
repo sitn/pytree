@@ -27,19 +27,16 @@ RUN apt-get update \
   && apt-get install --assume-yes python3 python-is-python3 python3-pip \
   && apt-get -y autoremove --purge && apt-get -y autoclean
 
-WORKDIR /app
-
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
-
 COPY . /app
-
 COPY --from=compiler /tmp/CPotree/build/extract_profile /usr/local/bin
 COPY --from=compiler /tmp/CPotree/build/liblaszip.so /usr/local/lib
 
-RUN chmod +x ./start_server.sh \
-  && chmod +x /usr/local/bin/extract_profile \
-  && chmod +x /usr/local/lib/liblaszip.so \
-  && ldconfig
+WORKDIR /app
 
+RUN pip3 install -r requirements.txt
+
+RUN chmod +x /usr/local/bin/extract_profile \
+  && chmod +x /usr/local/lib/liblaszip.so
+
+# Disable STDIN and STDOUT buffers
 ENV PYTHONUNBUFFERED=1

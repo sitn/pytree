@@ -1,4 +1,5 @@
-*.pyc
-pytree.yml
 cpotree/*
+*.pyc
+pytree_example.yml
+.env_example
 

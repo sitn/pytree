@@ -1,8 +1,7 @@
-import os, sys
+import os, sys, subprocess
 from flask_cors import CORS
 from pytree import start_app
 from dotenv import load_dotenv
-from subprocess import run
 load_dotenv()
 
 host = os.getenv('HOST')
@@ -14,7 +13,10 @@ if os.getenv('DEPLOY_ENV') == 'PROD' :
         print("Staring in production is not supported on Windows")
         sys.exit()
     print("Starting pytree in production...")
-    run("gunicorn -workers=4 pytree:start_app()")
+    subprocess.Popen(
+        ["gunicorn","--workers=4",f"pytree:start_app('{os.getenv('CONFIG_FILE')}','{os.getenv('CPOTREE_EXE')}')"], 
+        stdout=subprocess.PIPE
+    ).communicate()
 else:
     print("Starting pytree in development...")
     CORS(app)

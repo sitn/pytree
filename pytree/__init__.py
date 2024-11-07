@@ -44,6 +44,7 @@ def start_app(config_file, cpotree_exe):
         headerSize = int.from_bytes(result[0:4], byteorder='little')
         if os.name == 'nt': # Under Windows \n are replaced by \r\n so we need to invert that
             result = bytes(result.replace(b'\r\n', b'\n')) 
+        print(result[4:4+headerSize])
         header = json.loads(result[4:4+headerSize].decode())
         header['headerSize'] = headerSize
         return (result, header)

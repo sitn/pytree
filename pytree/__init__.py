@@ -41,7 +41,6 @@ def start_app(config_file, cpotree_exe, data_dir):
         try:
             with open(potree_file): pass
         except:
-            app.logger.debug(f'Error opening {potree_file}')
             error(500, 'Error opening requested point cloud metadata')
 
     def cpotree(potree_file, coord, width, minLOD, maxLOD):
@@ -50,7 +49,6 @@ def start_app(config_file, cpotree_exe, data_dir):
         headerSize = int.from_bytes(result[0:4], byteorder='little')
         if os.name == 'nt': # Under Windows \n are replaced by \r\n so we need to invert that
             result = bytes(result.replace(b'\r\n', b'\n')) 
-        print(result[4:4+headerSize])
         header = json.loads(result[4:4+headerSize].decode())
         header['headerSize'] = headerSize
         return (result, header)

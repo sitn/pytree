@@ -1,6 +1,6 @@
-version: "3"
+version: "3.8"
 services:
-  api:
+  pytree:
     build:
       context: .
       dockerfile: Dockerfile

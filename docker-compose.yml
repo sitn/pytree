@@ -2,6 +2,7 @@ version: "3"
 services:
   api:
     build:
+      context: .
       dockerfile: Dockerfile
     environment:
       DEPLOY_ENV: ${DEPLOY_ENV}

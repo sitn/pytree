@@ -7,7 +7,7 @@ COORD_REGEX = r'\{([0-9]+(\.[0-9]+)?), ?([0-9]+(\.[0-9]+)?)\}, ?(\{([0-9]+(\.[0-
 REQUIRED_PARAMETERS_SOCKET = ['coordinates', 'width', 'pointCloud']
 REQUIRED_PARAMETERS_HTTP = ['coordinates', 'width', 'pointCloud', 'minLOD', 'maxLOD']
 
-def start_app(config_file, cpotree_exe):
+def start_app(config_file, cpotree_exe, data_dir):
     try:
         with open(config_file, 'r') as f:
             config = yaml.load(f, Loader=yaml.FullLoader)
@@ -15,6 +15,7 @@ def start_app(config_file, cpotree_exe):
         sys.exit(f"Unable to find configuration file in {config_file}")
 
     POINT_CLOUDS = config['vars']['pointclouds']
+
 
     app = Flask(__name__)
     sock = Sock(app)
@@ -25,7 +26,7 @@ def start_app(config_file, cpotree_exe):
         if socket != None : socket.send(f"Error {code} : {msg}")
         abort(code, f"Error {code} : {msg}")
 
-    def check_parameters(params, required_param, socket=None):
+    def check_parameters(params, required_param, potree_file, socket=None):
         for param in required_param:
             if param not in params :
                 error(400, f'Missing required {param} parameter', socket)
@@ -38,8 +39,9 @@ def start_app(config_file, cpotree_exe):
         if params['pointCloud'] not in POINT_CLOUDS:
             error(400, 'The referenced pointcloud is unknown.')
         try:
-            with open(POINT_CLOUDS[params['pointCloud']]): pass
+            with open(potree_file): pass
         except:
+            app.logger.debug(f'Error opening {potree_file}')
             error(500, 'Error opening requested point cloud metadata')
 
     def cpotree(potree_file, coord, width, minLOD, maxLOD):
@@ -57,11 +59,12 @@ def start_app(config_file, cpotree_exe):
     @cross_origin()
     def get():
         params = request.args.to_dict()
-        check_parameters(params, REQUIRED_PARAMETERS_HTTP)
+        potree_file = data_dir+POINT_CLOUDS[params["pointCloud"]]
+        check_parameters(params, REQUIRED_PARAMETERS_HTTP, potree_file)
         app.logger.debug(f'Pytree config: {config}')
         app.logger.debug(f'Request args: {request.args}')
         params = request.args.to_dict()
-        profile, _ = cpotree(POINT_CLOUDS[params['pointCloud']], params['coordinates'], params['width'], params['minLOD'], params['maxLOD'])
+        profile, _ = cpotree(potree_file, params['coordinates'], params['width'], params['minLOD'], params['maxLOD'])
         return profile
 
     @sock.route('/echo')
@@ -71,7 +74,8 @@ def start_app(config_file, cpotree_exe):
                 params = json.loads(socket.receive())
             except Exception as e:
                 return socket.send(f"Invalid JSON parameters : {repr(e)}")
-            check_parameters(params, REQUIRED_PARAMETERS_SOCKET, socket)
+            potree_file = data_dir+POINT_CLOUDS[params["pointCloud"]]
+            check_parameters(params, REQUIRED_PARAMETERS_SOCKET, potree_file, socket)
             points_per_chunk = params['pointsPerChunk'] if "pointsPerChunk" in params else 0
 
             with open(POINT_CLOUDS[params['pointCloud']], "r") as f:
@@ -83,7 +87,7 @@ def start_app(config_file, cpotree_exe):
                 params['minLOD'] = current_LOD
                 params['maxLOD'] = current_LOD
                 current_LOD += 1
-                profile, header = cpotree(POINT_CLOUDS[params['pointCloud']], params['coordinates'], params['width'], params['minLOD'], params['maxLOD'])
+                profile, header = cpotree(potree_file, params['coordinates'], params['width'], params['minLOD'], params['maxLOD'])
                 nb_points += int(header['points'])
                 if nb_points < params['maxPoints'] :
                     if points_per_chunk == 0 or points_per_chunk > header['points']:

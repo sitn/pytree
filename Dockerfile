@@ -24,6 +24,7 @@ ENV PIP_ROOT_USER_ACTION=ignore
 # Disable STDIN and STDOUT buffers
 ENV PYTHONUNBUFFERED=1
 ENV CPOTREE_EXE=/usr/local/bin/extract_profile
+ENV DATA_DIR=/app/data
 
 RUN apt-get update \
   && apt-get upgrade --assume-yes \

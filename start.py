@@ -6,7 +6,6 @@ load_dotenv()
 
 host = os.getenv('HOST')
 port = os.getenv('PORT')
-app = start_app(os.getenv('CONFIG_FILE'), os.getenv('CPOTREE_EXE'))
 
 if os.getenv('DEPLOY_ENV') == 'PROD' :
     if os.name == 'nt':
@@ -14,10 +13,13 @@ if os.getenv('DEPLOY_ENV') == 'PROD' :
         sys.exit()
     print("Starting pytree in production...")
     subprocess.Popen(
-        ["gunicorn","--workers=4",f"pytree:start_app('{os.getenv('CONFIG_FILE')}','{os.getenv('CPOTREE_EXE')}')"], 
+        ["gunicorn",
+         "--workers=4",
+         f"pytree:start_app('{os.getenv('CONFIG_FILE')}','{os.getenv('CPOTREE_EXE')}','{os.getenv('DATA_DIR')}')"], 
         stdout=subprocess.PIPE
     ).communicate()
 else:
     print("Starting pytree in development...")
+    app = start_app(os.getenv('CONFIG_FILE'), os.getenv('CPOTREE_EXE'), os.getenv('DATA_DIR'))
     CORS(app)
     app.run(debug=True, host=host, port=port)

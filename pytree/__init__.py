@@ -37,6 +37,10 @@ def start_app(config_file, cpotree_exe):
             error(400, 'width is not a float', socket)
         if params['pointCloud'] not in POINT_CLOUDS:
             error(400, 'The referenced pointcloud is unknown.')
+        try:
+            with open(POINT_CLOUDS[params['pointCloud']]): pass
+        except:
+            error(500, 'Error opening requested point cloud metadata')
 
     def cpotree(potree_file, coord, width, minLOD, maxLOD):
         cmd = [cpotree_exe, potree_file, "--stdout", "-o", 'stdout', "--coordinates", coord, "--width", str(width), "--min-level", str(minLOD), "--max-level", str(maxLOD)]

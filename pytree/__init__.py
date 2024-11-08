@@ -67,7 +67,7 @@ def start_app(config_file, cpotree_exe, data_dir):
         profile, _ = cpotree(potree_file, params['coordinates'], params['width'], params['minLOD'], params['maxLOD'])
         return profile
 
-    @app.route('/echo', websocket=True)
+    @app.route('/profile/ws', websocket=True)
     def echo():
         try:
             while True:

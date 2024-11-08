@@ -1,8 +1,7 @@
 import logging, os, re, subprocess, yaml, sys, json
 from flask import Flask, jsonify, request, render_template, abort
-from flask_cors import cross_origin
-from flask_sock import Sock
-from flask_cors import CORS
+from flask_cors import cross_origin, CORS
+from simple_websocket import Server, ConnectionClosed
 
 COORD_REGEX = r'\{([0-9]+(\.[0-9]+)?), ?([0-9]+(\.[0-9]+)?)\}, ?(\{([0-9]+(\.[0-9]+)?), ?([0-9]+(\.[0-9]+)?)\}(, ?)?)+'
 REQUIRED_PARAMETERS_SOCKET = ['coordinates', 'width', 'pointCloud']
@@ -19,7 +18,6 @@ def start_app(config_file, cpotree_exe, data_dir):
 
     app = Flask(__name__)
     CORS(app)
-    sock = Sock(app)
     app.logger.setLevel(logging.DEBUG if os.environ.get('DEPLOY_ENV') == 'DEV' else logging.ERROR)
 
     def error(code, msg, socket=None):
@@ -27,16 +25,16 @@ def start_app(config_file, cpotree_exe, data_dir):
         if socket != None : socket.send(f"Error {code} : {msg}")
         abort(code, f"Error {code} : {msg}")
 
-    def check_parameters(params, required_param, potree_file, socket=None):
+    def check_parameters(params, required_param, potree_file):
         for param in required_param:
             if param not in params :
-                error(400, f'Missing required {param} parameter', socket)
+                error(400, f'Missing required {param} parameter')
         if not re.match(COORD_REGEX, params['coordinates']):
             error(400, 'coordinates parameter is malformed')
         try :
             params['width'] = float(params['width'])
         except Exception :
-            error(400, 'width is not a float', socket)
+            error(400, 'width is not a float')
         if params['pointCloud'] not in POINT_CLOUDS:
             error(400, 'The referenced pointcloud is unknown.')
         try:
@@ -66,39 +64,46 @@ def start_app(config_file, cpotree_exe, data_dir):
         profile, _ = cpotree(potree_file, params['coordinates'], params['width'], params['minLOD'], params['maxLOD'])
         return profile
 
-    @sock.route('/echo')
-    def echo(socket):
-        while True:
-            try:
-                params = json.loads(socket.receive())
-            except Exception as e:
-                return socket.send(f"Invalid JSON parameters : {repr(e)}")
-            potree_file = data_dir+POINT_CLOUDS[params["pointCloud"]]
-            check_parameters(params, REQUIRED_PARAMETERS_SOCKET, potree_file, socket)
-            points_per_chunk = params['pointsPerChunk'] if "pointsPerChunk" in params else 0
+    @app.route('/echo', websocket=True)
+    @cross_origin()
+    def echo():
+        try:
+            while True:
+                ws = Server.accept(request.environ)
+                try:
+                    params = json.loads(ws.receive())
+                except Exception as e:
+                    return ws.send(f"Invalid JSON parameters : {repr(e)}")
+                potree_file = data_dir+POINT_CLOUDS[params["pointCloud"]]
+                check_parameters(params, REQUIRED_PARAMETERS_SOCKET, potree_file)
+                points_per_chunk = params['pointsPerChunk'] if "pointsPerChunk" in params else 0
 
-            with open(potree_file, "r") as f:
-                metadata = json.loads(f.read())
+                with open(potree_file, "r") as f:
+                    metadata = json.loads(f.read())
 
-            nb_points = 0
-            current_LOD = 0
-            while nb_points < params['maxPoints'] and current_LOD < metadata['hierarchy']['depth']:
-                params['minLOD'] = current_LOD
-                params['maxLOD'] = current_LOD
-                current_LOD += 1
-                profile, header = cpotree(potree_file, params['coordinates'], params['width'], params['minLOD'], params['maxLOD'])
-                nb_points += int(header['points'])
-                if nb_points < params['maxPoints'] :
-                    if points_per_chunk == 0 or points_per_chunk > header['points']:
-                        socket.send(profile)
-                    else:
-                        current_byte = 4+header['headerSize']
-                        data_header = profile[0:current_byte]
-                        chunk_size = points_per_chunk*header['bytesPerPoint']
-                        current_byte += chunk_size
-                        while current_byte < header['points']*header['bytesPerPoint']:
-                            socket.send(data_header + profile[current_byte : current_byte+chunk_size])
+                nb_points = 0
+                current_LOD = 0
+                while nb_points < params['maxPoints'] and current_LOD < metadata['hierarchy']['depth']:
+                    params['minLOD'] = current_LOD
+                    params['maxLOD'] = current_LOD
+                    current_LOD += 1
+                    profile, header = cpotree(potree_file, params['coordinates'], params['width'], params['minLOD'], params['maxLOD'])
+                    nb_points += int(header['points'])
+                    if nb_points < params['maxPoints'] :
+                        if points_per_chunk == 0 or points_per_chunk > header['points']:
+                            ws.send(profile)
+                        else:
+                            current_byte = 4+header['headerSize']
+                            data_header = profile[0:current_byte]
+                            chunk_size = points_per_chunk*header['bytesPerPoint']
                             current_byte += chunk_size
+                            while current_byte < header['points']*header['bytesPerPoint']:
+                                ws.send(data_header + profile[current_byte : current_byte+chunk_size])
+                                current_byte += chunk_size
+        except ConnectionClosed:
+            pass
+        return ''
+        
 
     @app.route('/')
     def home():

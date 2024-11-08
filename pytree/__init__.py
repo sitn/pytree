@@ -115,7 +115,7 @@ def start_app(config_file, cpotree_exe, data_dir):
             vars.pop('cpotree_executable')
         if 'pointclouds' in vars:
             vars['pointclouds'] = list(vars['pointclouds'].keys())
-        return str(vars)
+        return json.dumps(vars)
     
     @app.route("/config")
     @cross_origin()

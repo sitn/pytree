@@ -16,7 +16,6 @@ def start_app(config_file, cpotree_exe, data_dir):
 
     POINT_CLOUDS = config['vars']['pointclouds']
 
-
     app = Flask(__name__)
     sock = Sock(app)
     app.logger.setLevel(logging.DEBUG if os.environ.get('DEPLOY_ENV') == 'DEV' else logging.ERROR)
@@ -76,7 +75,7 @@ def start_app(config_file, cpotree_exe, data_dir):
             check_parameters(params, REQUIRED_PARAMETERS_SOCKET, potree_file, socket)
             points_per_chunk = params['pointsPerChunk'] if "pointsPerChunk" in params else 0
 
-            with open(POINT_CLOUDS[params['pointCloud']], "r") as f:
+            with open(potree_file, "r") as f:
                 metadata = json.loads(f.read())
 
             nb_points = 0
@@ -107,9 +106,20 @@ def start_app(config_file, cpotree_exe, data_dir):
     def websocket():
         return render_template('websocket.html')
     
+    # Old profile config for compatibility with c2cgeoportal
     @app.route("/profile/config")
     @cross_origin()
     def profile_config_gmf2():
+        vars = config['vars'].copy()
+        if 'cpotree_executable' in vars:
+            vars.pop('cpotree_executable')
+        if 'pointclouds' in vars:
+            vars['pointclouds'] = list(vars['pointclouds'].keys())
+        return str(vars)
+    
+    @app.route("/config")
+    @cross_origin()
+    def profile_config():
         vars = config['vars'].copy()
         if 'cpotree_executable' in vars:
             vars.pop('cpotree_executable')

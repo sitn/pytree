@@ -2,6 +2,7 @@ import logging, os, re, subprocess, yaml, sys, json
 from flask import Flask, jsonify, request, render_template, abort
 from flask_cors import cross_origin, CORS
 from simple_websocket import Server, ConnectionClosed
+from pprint import pprint
 
 COORD_REGEX = r'\{([0-9]+(\.[0-9]+)?), ?([0-9]+(\.[0-9]+)?)\}, ?(\{([0-9]+(\.[0-9]+)?), ?([0-9]+(\.[0-9]+)?)\}(, ?)?)+'
 REQUIRED_PARAMETERS_SOCKET = ['coordinates', 'width', 'pointCloud']
@@ -69,6 +70,7 @@ def start_app(config_file, cpotree_exe, data_dir):
     def echo():
         try:
             while True:
+                pprint(request.environ)
                 ws = Server.accept(request.environ)
                 try:
                     params = json.loads(ws.receive())

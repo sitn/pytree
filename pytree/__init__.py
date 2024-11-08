@@ -1,6 +1,6 @@
 import logging, os, re, subprocess, yaml, sys, json
 from flask import Flask, jsonify, request, render_template, abort
-from flask_cors import cross_origin, CORS
+from flask_cors import CORS
 from simple_websocket import Server, ConnectionClosed
 from pprint import pprint
 
@@ -54,7 +54,6 @@ def start_app(config_file, cpotree_exe, data_dir):
         return (result, header)
 
     @app.route("/profile/get")
-    @cross_origin()
     def get():
         params = request.args.to_dict()
         potree_file = data_dir+POINT_CLOUDS[params["pointCloud"]]
@@ -66,12 +65,13 @@ def start_app(config_file, cpotree_exe, data_dir):
         return profile
 
     @app.route('/echo', websocket=True)
-    @cross_origin()
     def echo():
         try:
             while True:
                 pprint(request.environ)
                 ws = Server.accept(request.environ)
+                ws.send(f"OK")
+                return ''
                 try:
                     params = json.loads(ws.receive())
                 except Exception as e:
@@ -117,7 +117,6 @@ def start_app(config_file, cpotree_exe, data_dir):
     
     # Old profile config for compatibility with c2cgeoportal
     @app.route("/profile/config")
-    @cross_origin()
     def profile_config_gmf2():
         vars = config['vars'].copy()
         if 'cpotree_executable' in vars:
@@ -127,7 +126,6 @@ def start_app(config_file, cpotree_exe, data_dir):
         return json.dumps(vars)
     
     @app.route("/config")
-    @cross_origin()
     def profile_config():
         vars = config['vars'].copy()
         if 'cpotree_executable' in vars:

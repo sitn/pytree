@@ -28,14 +28,23 @@
     "pointCloud":"swissSURFACE3D"
 }        
     </textarea>
+    <br>
+    <input id="host" value="https://sitn.ne.ch/pytree/echo">
+    <br>
     <button onclick="start()">Start connection</button>
+    <h2>State : </h2>
+    <p id="state">Not connected</p>
+    <p id="data">No data received</p>
     <script>
         function start(){
-            const socket = new WebSocket('ws://127.0.0.1:6001/echo');
+            const socket = new WebSocket(document.getElementById("host").value);
             socket.addEventListener('message', m => {
                 console.log(m.data)
             });
-            socket.onopen = () => socket.send(document.getElementById("params").value )
+            socket.onopen = () => {
+                socket.send(document.getElementById("params").value )
+                document.getElementById("state").innerHTML = "Connected"
+            }
         }
     </script>
 </body>

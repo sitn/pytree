@@ -19,7 +19,10 @@ def start_app(config_file, cpotree_exe, data_dir):
 
     app = Flask(__name__)
     CORS(app)
-    app.logger.setLevel(logging.DEBUG if os.environ.get('DEPLOY_ENV') == 'DEV' else logging.ERROR)
+    app.logger.setLevel(logging.ERROR)
+    if os.environ.get('DEPLOY_ENV') == 'DEV' :
+        app.logger.setLevel(logging.DEBUG)
+        app.debug = True
 
     def error(code, msg, socket=None):
         print(f"Error {code} : {msg}")

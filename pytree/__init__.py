@@ -55,6 +55,15 @@ def start_app(config_file, cpotree_exe, data_dir):
         header = json.loads(result[4:4+headerSize].decode())
         header['headerSize'] = headerSize
         return (result, header)
+    
+    @app.before_request
+    def before_request_func():
+        if os.environ.get('DEPLOY_ENV') == 'DEV' :
+            print("New request")
+            print("Headers : ")
+            pprint(request.headers)
+            print("Env :")
+            pprint(request.environ)
 
     @app.route("/profile/get")
     def get():
@@ -68,12 +77,11 @@ def start_app(config_file, cpotree_exe, data_dir):
         return profile
 
     @app.route('/profile/ws', websocket=True)
-    def echo():
+    def ws():
         try:
             while True:
-                pprint(request.environ)
                 ws = Server.accept(request.environ)
-                ws.send(f"OK")
+                ws.send('OK')
                 return ''
                 try:
                     params = json.loads(ws.receive())

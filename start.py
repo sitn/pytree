@@ -1,5 +1,4 @@
 import os, sys, subprocess
-from flask_cors import CORS
 from pytree import start_app
 from dotenv import load_dotenv
 load_dotenv()
@@ -21,5 +20,4 @@ if os.getenv('DEPLOY_ENV') == 'PROD' :
 else:
     print("Starting pytree in development...")
     app = start_app(os.getenv('CONFIG_FILE'), os.getenv('CPOTREE_EXE'), os.getenv('DATA_DIR'))
-    CORS(app, resources={r"/*":{"origins":"*"}})
     app.run(debug=True, host=host, port=port)

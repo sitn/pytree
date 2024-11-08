@@ -2,6 +2,7 @@ import logging, os, re, subprocess, yaml, sys, json
 from flask import Flask, jsonify, request, render_template, abort
 from flask_cors import cross_origin
 from flask_sock import Sock
+from flask_cors import CORS
 
 COORD_REGEX = r'\{([0-9]+(\.[0-9]+)?), ?([0-9]+(\.[0-9]+)?)\}, ?(\{([0-9]+(\.[0-9]+)?), ?([0-9]+(\.[0-9]+)?)\}(, ?)?)+'
 REQUIRED_PARAMETERS_SOCKET = ['coordinates', 'width', 'pointCloud']
@@ -17,6 +18,7 @@ def start_app(config_file, cpotree_exe, data_dir):
     POINT_CLOUDS = config['vars']['pointclouds']
 
     app = Flask(__name__)
+    CORS(app)
     sock = Sock(app)
     app.logger.setLevel(logging.DEBUG if os.environ.get('DEPLOY_ENV') == 'DEV' else logging.ERROR)
 
